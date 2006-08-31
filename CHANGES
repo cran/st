@@ -1,0 +1,12 @@
+
+
+
+		CHANGES IN fdrtool VERSION 1.0.0
+
+
+This is the first standalone release (31 August 2006).
+
+This package implements the "shrinkage t" statistics described
+in Opgen-Rhein and Strimmer (2006).  It also offers a convenient
+interface to a number of other regularized t-type statistics often
+used in high-dimensional case-control studies.    
