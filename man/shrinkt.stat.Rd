@@ -10,7 +10,7 @@ shrinkt.fun(L, var.equal=TRUE, verbose=TRUE)
 
 \description{
   \code{shrinkt.stat} and \code{shrinkt.fun} compute the ``shrinkage t'' statistic
-   of Opgen-Rhein and Strimmer (2006).
+   of Opgen-Rhein and Strimmer (2007).
 }
 
 \arguments{
@@ -27,7 +27,7 @@ shrinkt.fun(L, var.equal=TRUE, verbose=TRUE)
   These are derived in a distribution-free fashion and with little a priori
   assumptions.   Despite its simplicity,
   it can be shown that ``shrinkage t'' procduces highly accurate rankings -
-  see Opgen-Rhein and Strimmer (2006).
+  see Opgen-Rhein and Strimmer (2007).
 }
 \value{
   \code{shrinkt.stat} returns a vector containing the ``shrinkage t'' 
@@ -39,12 +39,11 @@ shrinkt.fun(L, var.equal=TRUE, verbose=TRUE)
 }
 
 \references{
- Opgen-Rhein, R., and K. Strimmer. 2006. Accurate ranking of 
+ Opgen-Rhein, R., and K. Strimmer. 2007. Accurate ranking of 
  differentially expressed genes by a distribution-free shrinkage 
  approach.  
- 
- A preprint is available at 
- \url{http://strimmerlab.org/publications/shrinkt2006.pdf}.
+ Statist. Appl. Genet. Mol. Biol. \bold{6}:9.
+ (\url{http://www.bepress.com/sagmb/vol6/iss1/art9/})  
 }
 \author{
   Rainer Opgen-Rhein (\url{http://opgen-rhein.de})
