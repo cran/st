@@ -62,7 +62,7 @@ by B. Wu.
 Note that this requires the additional installation of the ``limma'' package.
 
 All the above statistics are compared relative to each other 
-(and relative to the shrinkage t statistic) in Opgen-Rhein and Strimmer (2006).
+and relative to the shrinkage t statistic in Opgen-Rhein and Strimmer (2007).
 }
 \value{
   The *.stat functions directly return the respective statistic for each variable.
@@ -72,13 +72,11 @@ All the above statistics are compared relative to each other
 }
 
 \references{
-
- Opgen-Rhein, R., and K. Strimmer. 2006. Accurate ranking of 
+ Opgen-Rhein, R., and K. Strimmer. 2007. Accurate ranking of 
  differentially expressed genes by a distribution-free shrinkage 
  approach.  
- 
- A preprint is available at 
- \url{http://strimmerlab.org/publications/shrinkt2006.pdf}.
+ Statist. Appl. Genet. Mol. Biol. \bold{6}:9.
+ (\url{http://www.bepress.com/sagmb/vol6/iss1/art9/})  
 }
 \author{
   Rainer Opgen-Rhein (\url{http://opgen-rhein.de})
@@ -98,10 +96,21 @@ dim(X) # 6 11475
 L <- choe2.L
 L
 
+
 # student t statistic
 score = studentt.stat(X, L)
 order(abs(score), decreasing=TRUE)[1:10]
 # [1] 11068   724  9990 11387 11310  9985  9996 11046    43    50
+
+# compute q-values and local false discovery rates
+# note the procedure automatically estimates the degree of freedom 
+# so any statistic following a t distribution may be supplied
+library("fdrtool")
+fdr.out = fdrtool(score, statistic="studentt") 
+sum( fdr.out$qval < 0.05 )
+sum( fdr.out$lfdr < 0.2 )
+fdr.out$param
+
 
 # difference of means /fold change statistic
 score = diffmean.stat(X, L)

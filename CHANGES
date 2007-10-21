@@ -1,4 +1,18 @@
 
+                   Release History of "st" Package
+               ========================================
+
+
+		CHANGES IN `st' PACKAGE VERSION 1.0.2
+
+
+- some corrections and extensions have been made in the documentation,
+  in particular, how to compute q-values and local FDR values
+- shrinkt() now returns a proper vector (one for which is.vector() is TRUE).
+- the license was changed from "GNU GPL 2 or later" to "GNU GPL 3 or later".
+
+
+
 		CHANGES IN `st' PACKAGE VERSION 1.0.1
 
 - reference to Opgen-Rhein and Strimmer (2007) updated.

@@ -83,5 +83,16 @@ order(abs(score), decreasing=TRUE)[1:10]
 # [1] 11068    50 10979   724    43  1022  5762 10936  9939  9769
 #  lambda.var (variance vector):  0.3673   0.3362
 
+
+# compute q-values and local false discovery rates
+# note the procedure automatically estimates the degree of freedom 
+# so any statistic following a t distribution may be supplied
+library("fdrtool")
+fdr.out = fdrtool(score, statistic="studentt") 
+sum( fdr.out$qval < 0.05 )
+sum( fdr.out$lfdr < 0.2 )
+fdr.out$param
+
+ 
 }
 \keyword{univar}

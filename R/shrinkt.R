@@ -1,4 +1,4 @@
-### shrinkt.R  (2006-08-30)
+### shrinkt.R  (2006-10-21)
 ###
 ###    Shrinkage t Statistic
 ###
@@ -58,7 +58,7 @@ shrinkt.fun <- function (L, var.equal=TRUE, verbose=TRUE)
         xc1 = sweep(X[L==1,], 2, tmp$mu1)
         xc2 = sweep(X[L==2,], 2, tmp$mu2)
 	
-        v <- var.shrink(rbind(xc1, xc2), verbose=verbose)*(n-1)/(n-2)
+        v <- as.vector( var.shrink(rbind(xc1, xc2), verbose=verbose)*(n-1)/(n-2) )
       
         # standard error of diff    
         sd = sqrt( (1/n1 + 1/n2)*v )
@@ -67,8 +67,8 @@ shrinkt.fun <- function (L, var.equal=TRUE, verbose=TRUE)
       {
         X1 = X[L==1,]
         X2 = X[L==2,]
-        v1 = var.shrink(X1, verbose=verbose)
-        v2 = var.shrink(X2, verbose=verbose)
+        v1 = as.vector(var.shrink(X1, verbose=verbose))
+        v2 = as.vector(var.shrink(X2, verbose=verbose))
    
         # standard error of diff 
         sd = sqrt( v1/n1 + v2/n2 )
