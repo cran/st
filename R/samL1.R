@@ -1,15 +1,15 @@
-### samL1.R  (2006-08-30)
+### samL1.R  (2008-10-27)
 ###
 ###    Wu (2005)Improved SAM Statistic
 ###
-### Copyright 2006 Rainer Opgen-Rhein and Korbinian Strimmer
+### Copyright 2006-2008 Rainer Opgen-Rhein and Korbinian Strimmer
 ###
 ### This function is based in part on R code provided by Baolin Wu.
 ###
 ###
 ### This file is part of the `st' library for R and related languages.
 ### It is made available under the terms of the GNU General Public
-### License, version 2, or at your option, any later version,
+### License, version 3, or at your option, any later version,
 ### incorporated herein by reference.
 ### 
 ### This program is distributed in the hope that it will be
@@ -44,19 +44,22 @@ samL1.fun <- function (L, method=c("lowess", "cor"),
 {
     method = match.arg(method)
    
-    if (missing(L))
-      stop("Please specify to which group (1 or 2) each sample is assigned!")
+    if (missing(L)) stop("class labels are missing!")
+    L = factor(L)
+    cl = levels(L)
+    if (length(cl) != 2) stop("class labels must be specified for two groups, not more or less!")
+    idx1 = (L == cl[1])
+    idx2 = (L == cl[2])
     
     function(X)
     {
-       
-      tmp = pvt.group.moments(X, L, variances=TRUE)
+      tmp = pvt.group.moments(X, idx1, idx2, variances=TRUE)
       
       # differences between the two groups
       diff = tmp$mu1-tmp$mu2
       
       # variance of diff
-      n1 = sum(L==1); n2 = sum(L==2)      
+      n1 = sum(idx1); n2 = sum(idx2)      
       v.diff = (1/n1 + 1/n2)*tmp$v.pooled
       sd = sqrt(v.diff)
       

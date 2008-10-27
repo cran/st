@@ -1,13 +1,13 @@
-### shrinkt.R  (2006-10-21)
+### shrinkt.R  (2008-10-27)
 ###
 ###    Shrinkage t Statistic
 ###
-### Copyright 2006 Rainer Opgen-Rhein and Korbinian Strimmer
+### Copyright 2006-2008 Rainer Opgen-Rhein and Korbinian Strimmer
 ###
 ###
 ### This file is part of the `st' library for R and related languages.
 ### It is made available under the terms of the GNU General Public
-### License, version 2, or at your option, any later version,
+### License, version 3, or at your option, any later version,
 ### incorporated herein by reference.
 ### 
 ### This program is distributed in the hope that it will be
@@ -31,19 +31,23 @@ shrinkt.stat = function (X, L, var.equal=TRUE, verbose=TRUE)
 }
 
 
-shrinkt.fun <- function (L, var.equal=TRUE, verbose=TRUE)
+shrinkt.fun = function (L, var.equal=TRUE, verbose=TRUE)
 {
-    if (missing(L))
-      stop("Please specify to which group (1 or 2) each sample is assigned!")
-    
+    if (missing(L)) stop("class labels are missing!")
+    L = factor(L)
+    cl = levels(L)
+    if (length(cl) != 2) stop("class labels must be specified for two groups, not more or less!")
+    idx1 = (L == cl[1])
+    idx2 = (L == cl[2])
+ 
     function(X)
     {
-      p <- ncol(X)
-      n <- nrow(X)   
-      n1 = sum(L==1)
-      n2 = sum(L==2)  
+      p = ncol(X)
+      n = nrow(X)   
+      n1 = sum(idx1)
+      n2 = sum(idx2)  
       
-      tmp = pvt.group.moments(X, L, variances=FALSE)
+      tmp = pvt.group.moments(X, idx1, idx2, variances=FALSE)
       
       # differences between the two groups
       diff = tmp$mu1-tmp$mu2
@@ -55,18 +59,18 @@ shrinkt.fun <- function (L, var.equal=TRUE, verbose=TRUE)
       if (var.equal) # compute pooled variance
       {	
 	# center data
-        xc1 = sweep(X[L==1,], 2, tmp$mu1)
-        xc2 = sweep(X[L==2,], 2, tmp$mu2)
+        xc1 = sweep(X[idx1,], 2, tmp$mu1)
+        xc2 = sweep(X[idx2,], 2, tmp$mu2)
 	
-        v <- as.vector( var.shrink(rbind(xc1, xc2), verbose=verbose)*(n-1)/(n-2) )
+        v = as.vector( var.shrink(rbind(xc1, xc2), verbose=verbose)*(n-1)/(n-2) )
       
         # standard error of diff    
         sd = sqrt( (1/n1 + 1/n2)*v )
       }
       else # allow different variances in each class
       {
-        X1 = X[L==1,]
-        X2 = X[L==2,]
+        X1 = X[idx1,]
+        X2 = X[idx2,]
         v1 = as.vector(var.shrink(X1, verbose=verbose))
         v2 = as.vector(var.shrink(X2, verbose=verbose))
    
@@ -75,7 +79,7 @@ shrinkt.fun <- function (L, var.equal=TRUE, verbose=TRUE)
       }
           
       # t statistic
-      t <- diff/sd
+      t = diff/sd
 
       return(t)
     }

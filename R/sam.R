@@ -1,13 +1,13 @@
-### sam.R  (2006-08-30)
+### sam.R  (2008-10-27)
 ###
 ###    SAM t Statistic
 ###
-### Copyright 2006 Rainer Opgen-Rhein and Korbinian Strimmer
+### Copyright 2006-2008 Rainer Opgen-Rhein and Korbinian Strimmer
 ###
 ###
 ### This file is part of the `st' library for R and related languages.
 ### It is made available under the terms of the GNU General Public
-### License, version 2, or at your option, any later version,
+### License, version 3, or at your option, any later version,
 ### incorporated herein by reference.
 ### 
 ### This program is distributed in the hope that it will be
@@ -22,7 +22,7 @@
 ### MA 02111-1307, USA
 
 
-# Note: these function2 require the "samr" library
+# Note: these functions require the "samr" library
 
 sam.stat = function (X, L)
 {
@@ -36,12 +36,14 @@ sam.fun <- function(L)
 {
    require("samr")
 
-   if (missing(L))
-      stop("Please specify to which group (1 or 2) each sample is assigned!")
+    if (missing(L)) stop("class labels are missing!")
+    L = factor(L)
+    cl = levels(L)
+    if (length(cl) != 2) stop("class labels must be specified for two groups, not more or less!")
   
    function(X)
     {
-      dd = list(x=t(X),y=L, logged2=TRUE)
+      dd = list(x=t(X),y=as.integer(L), logged2=TRUE)
       out = samr(dd, resp.type="Two class unpaired", nperms=1)
   
       return(out$tt) # SAM test statistic

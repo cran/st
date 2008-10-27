@@ -38,8 +38,7 @@ modt.fun(L)
 \arguments{
   \item{X}{data matrix. Note that the \emph{columns} correspond to variables (``genes'')
            and the \emph{rows} to samples.}
-  \item{L}{group indicator vector.  Samples belonging to the first group  are
-           assigned a `1', and those belonging to the second group a `2'. }
+  \item{L}{vector with class labels for the two groups.  }
   \item{method}{determines how the smoothing parameter is estimated (applies only to improved SAM statistic \code{samL1}).}
   \item{plot}{output diagnostic plot (applies only to improved SAM statistic \code{samL1}).}
   \item{verbose}{print out some (more or less useful) information during computation.}
@@ -96,6 +95,8 @@ dim(X) # 6 11475
 L <- choe2.L
 L
 
+# L may also contain some real labels
+L = c("group 1", "group 1", "group 1", "group 2", "group 2", "group 2")
 
 # student t statistic
 score = studentt.stat(X, L)
@@ -103,10 +104,8 @@ order(abs(score), decreasing=TRUE)[1:10]
 # [1] 11068   724  9990 11387 11310  9985  9996 11046    43    50
 
 # compute q-values and local false discovery rates
-# note the procedure automatically estimates the degree of freedom 
-# so any statistic following a t distribution may be supplied
 library("fdrtool")
-fdr.out = fdrtool(score, statistic="studentt") 
+fdr.out = fdrtool(score) 
 sum( fdr.out$qval < 0.05 )
 sum( fdr.out$lfdr < 0.2 )
 fdr.out$param
@@ -129,8 +128,8 @@ order(abs(score), decreasing=TRUE)[1:10]
 #[1]  4790 10979  1022  5762    35   970    50 11068 10905  2693
 
 # improved sam statistic
-score = samL1.stat(X, L)
-order(abs(score), decreasing=TRUE)[1:10]
+#score = samL1.stat(X, L)
+#order(abs(score), decreasing=TRUE)[1:10]
 #[1]  1  2  3  4  5  6  7  8  9 10
 # here all scores are zero!
 

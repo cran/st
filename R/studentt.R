@@ -1,13 +1,13 @@
-### studentt.R  (2006-08-30)
+### studentt.R  (2008-10-27)
 ###
 ###    Student t statistic and related stuff
 ###
-### Copyright 2006 Rainer Opgen-Rhein and Korbinian Strimmer
+### Copyright 2006-2008 Rainer Opgen-Rhein and Korbinian Strimmer
 ###
 ###
 ### This file is part of the `st' library for R and related languages.
 ### It is made available under the terms of the GNU General Public
-### License, version 2, or at your option, any later version,
+### License, version 3, or at your option, any later version,
 ### incorporated herein by reference.
 ### 
 ### This program is distributed in the hope that it will be
@@ -32,14 +32,18 @@ diffmean.stat = function (X, L)
   return( score )
 }
 
-diffmean.fun <- function (L)
+diffmean.fun = function (L)
 {
-    if (missing(L))
-      stop("Please specify to which group (1 or 2) each sample is assigned!")
+    if (missing(L)) stop("class labels are missing!")
+    L = factor(L)
+    cl = levels(L)
+    if (length(cl) != 2) stop("class labels must be specified for two groups, not more or less!")
+    idx1 = (L == cl[1])
+    idx2 = (L == cl[2])
     
     function(X)
     { 
-      tmp = pvt.group.moments(X, L, variances=FALSE)
+      tmp = pvt.group.moments(X, idx1, idx2, variances=FALSE)
       
       # differences between the two groups
       diff = tmp$mu1-tmp$mu2
@@ -60,20 +64,24 @@ studentt.stat = function (X, L)
   return( score )
 }
 
-studentt.fun <- function (L)
+studentt.fun = function (L)
 {
-    if (missing(L))
-      stop("Please specify to which group (1 or 2) each sample is assigned!")
+    if (missing(L)) stop("class labels are missing!")
+    L = factor(L)
+    cl = levels(L)
+    if (length(cl) != 2) stop("class labels must be specified for two groups, not more or less!")
+    idx1 = (L == cl[1])
+    idx2 = (L == cl[2])
 
     function(X)
     { 
-      tmp = pvt.group.moments(X, L, variances=TRUE)
+      tmp = pvt.group.moments(X, idx1, idx2, variances=TRUE)
       
       # differences between the two groups
       diff = tmp$mu1-tmp$mu2
       
       # standard error of diff
-      n1 = sum(L==1); n2 = sum(L==2)      
+      n1 = sum(idx1); n2 = sum(idx2)      
       sd = sqrt( (1/n1 + 1/n2)*tmp$v.pooled )
       
       # t statistic
@@ -87,11 +95,11 @@ studentt.fun <- function (L)
 ### private utility function
 
 # compute group means and pooled variances
-pvt.group.moments = function(X, L, variances=TRUE)
+pvt.group.moments = function(X, idx1, idx2, variances=TRUE)
 {
      # two groups
-     X1 = X[L==1,]; n1 = sum(L==1)
-     X2 = X[L==2,]; n2 = sum(L==2)
+     X1 = X[idx1,]; n1 = sum(idx1)
+     X2 = X[idx2,]; n2 = sum(idx2)
 
      if (n1 == 0 || n2 == 0 || n1+n2 < 3)
      {

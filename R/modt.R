@@ -1,13 +1,13 @@
-### modt.R  (2006-08-30)
+### modt.R  (2007-10-27)
 ###
 ###    Moderated t Statistic
 ###
-### Copyright 2006 Rainer Opgen-Rhein and Korbinian Strimmer
+### Copyright 2006-2008 Rainer Opgen-Rhein and Korbinian Strimmer
 ###
 ###
 ### This file is part of the `st' library for R and related languages.
 ### It is made available under the terms of the GNU General Public
-### License, version 2, or at your option, any later version,
+### License, version 3, or at your option, any later version,
 ### incorporated herein by reference.
 ### 
 ### This program is distributed in the hope that it will be
@@ -37,11 +37,14 @@ modt.fun <- function (L)
 {
     require("limma")
     
-    if (missing(L))
-      stop("Please specify to which group (1 or 2) each sample is assigned!")
+    if (missing(L)) stop("class labels are missing!")
+    L = factor(L)
+    cl = levels(L)
+    if (length(cl) != 2) stop("class labels must be specified for two groups, not more or less!")
 
     function(X)
     {
+      L = as.integer(L)
       d <- cbind(rep(1, length(L)), L)
       fit <- lmFit(t(X), design=d)
       eb.out <- ebayes(fit)

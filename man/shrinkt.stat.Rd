@@ -16,8 +16,7 @@ shrinkt.fun(L, var.equal=TRUE, verbose=TRUE)
 \arguments{
   \item{X}{data matrix. Note that the \emph{columns} correspond to variables (``genes'')
            and the \emph{rows} to samples.}
-  \item{L}{group indicator vector.  Samples belonging to the first group  are
-           assigned a `1', and those belonging to the second group a `2'. }
+  \item{L}{vector with class labels for the two groups. }
   \item{var.equal}{assume equal (default) or unequal variances in each group.}
   \item{verbose}{print out some (more or less useful) information during computation.}
 }
@@ -25,8 +24,7 @@ shrinkt.fun(L, var.equal=TRUE, verbose=TRUE)
   The ``shrinkage t'' statistic is similar to the usual t statistic, with the
   replacement of the sample variances by corresponding shrinkage estimates.
   These are derived in a distribution-free fashion and with little a priori
-  assumptions.   Despite its simplicity,
-  it can be shown that ``shrinkage t'' procduces highly accurate rankings -
+  assumptions.   Using the ``shrinkage t'' statistic procduces highly accurate rankings -
   see Opgen-Rhein and Strimmer (2007).
 }
 \value{
@@ -68,6 +66,9 @@ dim(X) # 6 11475
 L <- choe2.L
 L
 
+# L may also contain some real labels
+L = c("group 1", "group 1", "group 1", "group 2", "group 2", "group 2")
+
 # shrinkage t statistic (equal variances)
 score = shrinkt.stat(X, L)
 order(abs(score), decreasing=TRUE)[1:10]
@@ -85,10 +86,8 @@ order(abs(score), decreasing=TRUE)[1:10]
 
 
 # compute q-values and local false discovery rates
-# note the procedure automatically estimates the degree of freedom 
-# so any statistic following a t distribution may be supplied
 library("fdrtool")
-fdr.out = fdrtool(score, statistic="studentt") 
+fdr.out = fdrtool(score) 
 sum( fdr.out$qval < 0.05 )
 sum( fdr.out$lfdr < 0.2 )
 fdr.out$param
