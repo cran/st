@@ -78,7 +78,7 @@ and relative to the shrinkage t statistic in Opgen-Rhein and Strimmer (2007).
  (\url{http://www.bepress.com/sagmb/vol6/iss1/art9/})  
 }
 \author{
-  Rainer Opgen-Rhein (\url{http://opgen-rhein.de})
+  Rainer Opgen-Rhein 
   and
   Korbinian Strimmer (\url{http://strimmerlab.org}).
 }

@@ -1,4 +1,4 @@
-### studentt.R  (2008-10-27)
+### studentt.R  (2008-11-19)
 ###
 ###    Student t statistic and related stuff
 ###
@@ -34,24 +34,18 @@ diffmean.stat = function (X, L)
 
 diffmean.fun = function (L)
 {
-    if (missing(L)) stop("class labels are missing!")
-    L = factor(L)
-    cl = levels(L)
-    if (length(cl) != 2) stop("class labels must be specified for two groups, not more or less!")
-    idx1 = (L == cl[1])
-    idx2 = (L == cl[2])
+    if (missing(L)) stop("Class labels are missing!")
     
     function(X)
     { 
-      tmp = pvt.group.moments(X, idx1, idx2, variances=FALSE)
+      tmp = centroids(X, L, var.pooled=FALSE, var.groups=FALSE, shrink=FALSE, verbose=TRUE)
       
       # differences between the two groups
-      diff = tmp$mu1-tmp$mu2
+      diff = tmp$means[,1]-tmp$means[,2]
       
       return(diff)
     }
 }
-
 
 
 # student t statistic
@@ -66,23 +60,20 @@ studentt.stat = function (X, L)
 
 studentt.fun = function (L)
 {
-    if (missing(L)) stop("class labels are missing!")
-    L = factor(L)
-    cl = levels(L)
-    if (length(cl) != 2) stop("class labels must be specified for two groups, not more or less!")
-    idx1 = (L == cl[1])
-    idx2 = (L == cl[2])
-
+    if (missing(L)) stop("Class labels are missing!")
+ 
     function(X)
     { 
-      tmp = pvt.group.moments(X, idx1, idx2, variances=TRUE)
+      tmp = centroids(X, L, var.pooled=TRUE, var.groups=FALSE, shrink=FALSE, verbose=TRUE)
       
       # differences between the two groups
-      diff = tmp$mu1-tmp$mu2
+      diff = tmp$means[,1]-tmp$means[,2]
       
       # standard error of diff
-      n1 = sum(idx1); n2 = sum(idx2)      
-      sd = sqrt( (1/n1 + 1/n2)*tmp$v.pooled )
+      n1 = tmp$samples[1]
+      n2 = tmp$samples[2]
+      v =  tmp$var.pooled   
+      sd = sqrt( (1/n1 + 1/n2)*v )
       
       # t statistic
       t = diff/sd
@@ -92,43 +83,4 @@ studentt.fun = function (L)
 }
 
 
-### private utility function
-
-# compute group means and pooled variances
-pvt.group.moments = function(X, idx1, idx2, variances=TRUE)
-{
-     # two groups
-     X1 = X[idx1,]; n1 = sum(idx1)
-     X2 = X[idx2,]; n2 = sum(idx2)
-
-     if (n1 == 0 || n2 == 0 || n1+n2 < 3)
-     {
-       stop("increase sample size!")
-     }
-      
-     # means of each group
-     mu1 = colMeans(X1)
-     mu2 = colMeans(X2)
-     
-     if (variances)
-     {
-       # pooled variance
-       r1 = colSums(X1^2)-n1*mu1^2
-       r2 = colSums(X2^2)-n2*mu2^2
-       # r1 = (n1-1)*apply(X1, 2, var)   # equivalent but much slower code
-       # r2 = (n2-1)*apply(X2, 2, var)
-       
-       v.pooled  = (r1+r2)/(n1+n2-2) 
-       v1 = r1/(n1-1)
-       v2 = r2/(n2-1)
-     }
-     else
-     {
-       v.pooled = NULL
-       v1 = NULL
-       v2 = NULL
-     }
-          
-     return( list(mu1=mu1, mu2=mu2, v.pooled=v.pooled, v1=v1, v2=v2) )
-}
 

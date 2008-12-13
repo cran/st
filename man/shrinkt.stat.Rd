@@ -25,7 +25,10 @@ shrinkt.fun(L, var.equal=TRUE, verbose=TRUE)
   replacement of the sample variances by corresponding shrinkage estimates.
   These are derived in a distribution-free fashion and with little a priori
   assumptions.   Using the ``shrinkage t'' statistic procduces highly accurate rankings -
-  see Opgen-Rhein and Strimmer (2007).
+  see Opgen-Rhein and Strimmer (2007).  
+
+  The``shrinkage t'' statistic can be generalized to include gene-wise correlation,
+  see \code{\link{shrinkcat.stat}}.
 }
 \value{
   \code{shrinkt.stat} returns a vector containing the ``shrinkage t'' 
@@ -44,7 +47,7 @@ shrinkt.fun(L, var.equal=TRUE, verbose=TRUE)
  (\url{http://www.bepress.com/sagmb/vol6/iss1/art9/})  
 }
 \author{
-  Rainer Opgen-Rhein (\url{http://opgen-rhein.de})
+  Rainer Opgen-Rhein
   and
   Korbinian Strimmer (\url{http://strimmerlab.org}).
 }
@@ -53,7 +56,8 @@ shrinkt.fun(L, var.equal=TRUE, verbose=TRUE)
 	 \code{\link{efront.stat}},
 	 \code{\link{sam.stat}},
          \code{\link{samL1.stat}},
-	 \code{\link{modt.stat}}.}
+	 \code{\link{modt.stat}},
+         \code{\link{shrinkcat.stat}}.}
 
 \examples{
 # load st library 

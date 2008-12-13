@@ -1,6 +1,5 @@
 \name{st-internal}
 
-\alias{pvt.group.moments}
 \alias{pvt.samL1.get.lambda}
 
 \title{Internal st Functions}

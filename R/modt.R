@@ -37,10 +37,10 @@ modt.fun <- function (L)
 {
     require("limma")
     
-    if (missing(L)) stop("class labels are missing!")
+    if (missing(L)) stop("Class labels are missing!")
     L = factor(L)
     cl = levels(L)
-    if (length(cl) != 2) stop("class labels must be specified for two groups, not more or less!")
+    if (length(cl) != 2) stop("Class labels must be specified for two groups, not more or less!")
 
     function(X)
     {

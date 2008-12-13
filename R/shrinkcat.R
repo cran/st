@@ -1,8 +1,8 @@
-### efront.R  (2008-11-19)
+### shrinkcat.R  (2008-12-01)
 ###
-###    Efron t Statistic (2001)
+###    Shrinkage Estimation of Correlation-Adjusted t Statistic
 ###
-### Copyright 2006-2008 Rainer Opgen-Rhein and Korbinian Strimmer
+### Copyright 2008 Verena Zuber and Korbinian Strimmer
 ###
 ###
 ### This file is part of the `st' library for R and related languages.
@@ -22,40 +22,52 @@
 ### MA 02111-1307, USA
 
 
-efront.stat = function (X, L, verbose=TRUE)
+shrinkcat.stat = function (X, L, verbose=TRUE)
 {
-  FUN = efront.fun(L=L, verbose=verbose)
+  FUN = shrinkcat.fun(L=L, verbose=verbose)
   score = FUN(X)
   
   return( score )
 }
 
-efront.fun <- function (L, verbose=TRUE)
+
+shrinkcat.fun = function (L, verbose=TRUE)
 {
     if (missing(L)) stop("Class labels are missing!")
-
+  
     function(X)
     {
-      tmp = centroids(X, L, var.pooled=TRUE, var.groups=FALSE, shrink=FALSE, verbose=verbose)
+      p = ncol(X)
+      n = nrow(X)   
+
+      tmp = centroids(X, L, var.pooled=TRUE, var.groups=FALSE, 
+                         powcor.pooled=TRUE, alpha=-1/2, shrink=TRUE, verbose=verbose)
+      n1 = tmp$samples[1]
+      n2 = tmp$samples[2]
       
       # differences between the two groups
       diff = tmp$means[,1]-tmp$means[,2]
-      
+
       # standard error of diff
       n1 = tmp$samples[1]
       n2 = tmp$samples[2]
       v =  tmp$var.pooled   
       sd = sqrt( (1/n1 + 1/n2)*v )
       
-      # tuning parameter
-      a0 <- quantile(sd, probs=c(0.9))
-      
-      if (verbose) cat("Fudge factor a0 =", a0, "\n")
-      
+          
       # t statistic
-      t = diff/(sd+a0)
-                 
-      return(t)
+      t = diff/sd
+
+      # correlation-adjusted statistic
+      if (is.null(dim(tmp$powcor.pooled))) # if there is no correlation
+        cat = t
+      else
+        cat = crossprod(tmp$powcor.pooled, t) # decorrelate t
+
+      cat = as.vector(cat)
+      attr(cat, "lambda.var") = attr(tmp$var.pooled, "lambda.var")
+      attr(cat, "lambda") = attr(tmp$powcor.pooled, "lambda")
+
+      return(cat)
     }
 }
-

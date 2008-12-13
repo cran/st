@@ -33,46 +33,39 @@ shrinkt.stat = function (X, L, var.equal=TRUE, verbose=TRUE)
 
 shrinkt.fun = function (L, var.equal=TRUE, verbose=TRUE)
 {
-    if (missing(L)) stop("class labels are missing!")
-    L = factor(L)
-    cl = levels(L)
-    if (length(cl) != 2) stop("class labels must be specified for two groups, not more or less!")
-    idx1 = (L == cl[1])
-    idx2 = (L == cl[2])
- 
+    if (missing(L)) stop("Class labels are missing!")
+  
     function(X)
     {
       p = ncol(X)
       n = nrow(X)   
-      n1 = sum(idx1)
-      n2 = sum(idx2)  
-      
-      tmp = pvt.group.moments(X, idx1, idx2, variances=FALSE)
-      
-      # differences between the two groups
-      diff = tmp$mu1-tmp$mu2
-      
-      #adiff = abs(diff)
-      #cutoff = quantile(adiff, probs=c(0.5))
-      #diff[ (adiff < cutoff) ] = 0   # hard thresholding
-      
+
       if (var.equal) # compute pooled variance
-      {	
-	# center data
-        xc1 = sweep(X[idx1,], 2, tmp$mu1)
-        xc2 = sweep(X[idx2,], 2, tmp$mu2)
-	
-        v = as.vector( var.shrink(rbind(xc1, xc2), verbose=verbose)*(n-1)/(n-2) )
+      {
+        tmp = centroids(X, L, var.pooled=TRUE, var.groups=FALSE, shrink=TRUE, verbose=verbose)
+        n1 = tmp$samples[1]
+        n2 = tmp$samples[2]
       
-        # standard error of diff    
+        # differences between the two groups
+        diff = tmp$means[,1]-tmp$means[,2]
+
+        # standard error of diff
+        n1 = tmp$samples[1]
+        n2 = tmp$samples[2]
+        v =  tmp$var.pooled   
         sd = sqrt( (1/n1 + 1/n2)*v )
       }
       else # allow different variances in each class
       {
-        X1 = X[idx1,]
-        X2 = X[idx2,]
-        v1 = as.vector(var.shrink(X1, verbose=verbose))
-        v2 = as.vector(var.shrink(X2, verbose=verbose))
+        tmp = centroids(X, L, var.pooled=FALSE, var.groups=TRUE, shrink=TRUE, verbose=verbose)
+        n1 = tmp$samples[1]
+        n2 = tmp$samples[2]
+      
+        # differences between the two groups
+        diff = tmp$means[,1]-tmp$means[,2]
+
+        v1 = as.vector(tmp$var.groups[,1])
+        v2 = as.vector(tmp$var.groups[,2])
    
         # standard error of diff 
         sd = sqrt( v1/n1 + v2/n2 )

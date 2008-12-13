@@ -1,6 +1,16 @@
 
-                   Release History of "st" Package
-               ========================================
+                 RELEASE HISTORY OF THE "st" PACKAGE
+               =======================================
+
+
+		CHANGES IN `st' PACKAGE VERSION 1.1.0
+
+- new functions shrinkcat.stat() und shrinkcat.fun() implementing
+  a shrinkage estimate of the "correlation-adjusted t-score" described
+  in Zuber and Strimmer (2008).
+- part of the code was rewritten to share code with the "sda" package 
+  (exploiting the link between discriminant analysis and gene ranking). 
+
 
 		CHANGES IN `st' PACKAGE VERSION 1.0.3
 
@@ -11,12 +21,10 @@
 
 		CHANGES IN `st' PACKAGE VERSION 1.0.2
 
-
 - some corrections and extensions have been made in the documentation,
   in particular, how to compute q-values and local FDR values
 - shrinkt() now returns a proper vector (one for which is.vector() is TRUE).
 - the license was changed from "GNU GPL 2 or later" to "GNU GPL 3 or later".
-
 
 
 		CHANGES IN `st' PACKAGE VERSION 1.0.1
@@ -24,7 +32,6 @@
 - reference to Opgen-Rhein and Strimmer (2007) updated.
 - updated email address
 - updated minimum R versions and version of corpcor package
-
 
 
 		CHANGES IN `st' PACKAGE VERSION 1.0.0

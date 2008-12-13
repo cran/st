@@ -1,4 +1,4 @@
-### samL1.R  (2008-10-27)
+### samL1.R  (2008-11-19)
 ###
 ###    Wu (2005)Improved SAM Statistic
 ###
@@ -44,23 +44,19 @@ samL1.fun <- function (L, method=c("lowess", "cor"),
 {
     method = match.arg(method)
    
-    if (missing(L)) stop("class labels are missing!")
-    L = factor(L)
-    cl = levels(L)
-    if (length(cl) != 2) stop("class labels must be specified for two groups, not more or less!")
-    idx1 = (L == cl[1])
-    idx2 = (L == cl[2])
-    
+    if (missing(L)) stop("Class labels are missing!")
+     
     function(X)
     {
-      tmp = pvt.group.moments(X, idx1, idx2, variances=TRUE)
+      tmp = centroids(X, L, var.pooled=TRUE, var.groups=FALSE, shrink=FALSE, verbose=verbose)
       
       # differences between the two groups
-      diff = tmp$mu1-tmp$mu2
+      diff = tmp$means[,1]-tmp$means[,2]
       
       # variance of diff
-      n1 = sum(idx1); n2 = sum(idx2)      
-      v.diff = (1/n1 + 1/n2)*tmp$v.pooled
+      n1 = tmp$samples[1]
+      n2 = tmp$samples[2]
+      v.diff = (1/n1 + 1/n2)*tmp$var.pooled  
       sd = sqrt(v.diff)
       
       lambda = pvt.samL1.get.lambda(diff, sd, method=method, verbose=verbose, plot=plot)
