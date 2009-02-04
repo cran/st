@@ -16,7 +16,7 @@ shrinkt.fun(L, var.equal=TRUE, verbose=TRUE)
 \arguments{
   \item{X}{data matrix. Note that the \emph{columns} correspond to variables (``genes'')
            and the \emph{rows} to samples.}
-  \item{L}{vector with class labels for the two groups. }
+  \item{L}{factor containing class labels for the two groups. }
   \item{var.equal}{assume equal (default) or unequal variances in each group.}
   \item{verbose}{print out some (more or less useful) information during computation.}
 }
@@ -53,10 +53,6 @@ shrinkt.fun(L, var.equal=TRUE, verbose=TRUE)
 }
 \seealso{\code{\link{studentt.stat}},
          \code{\link{diffmean.stat}},
-	 \code{\link{efront.stat}},
-	 \code{\link{sam.stat}},
-         \code{\link{samL1.stat}},
-	 \code{\link{modt.stat}},
          \code{\link{shrinkcat.stat}}.}
 
 \examples{

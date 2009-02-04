@@ -1,8 +1,6 @@
 \name{regularizedt}
 \alias{studentt.stat}
 \alias{studentt.fun}
-\alias{diffmean.stat}
-\alias{diffmean.fun}
 \alias{efront.stat}
 \alias{efront.fun}
 \alias{sam.stat}
@@ -18,8 +16,6 @@
 \usage{
 studentt.stat(X, L)
 studentt.fun(L)
-diffmean.stat(X, L)
-diffmean.fun(L)
 efront.stat(X, L, verbose=TRUE)
 efront.fun(L, verbose=TRUE)
 sam.stat(X, L)
@@ -38,15 +34,13 @@ modt.fun(L)
 \arguments{
   \item{X}{data matrix. Note that the \emph{columns} correspond to variables (``genes'')
            and the \emph{rows} to samples.}
-  \item{L}{vector with class labels for the two groups.  }
+  \item{L}{factor containing class labels for the two groups.  }
   \item{method}{determines how the smoothing parameter is estimated (applies only to improved SAM statistic \code{samL1}).}
   \item{plot}{output diagnostic plot (applies only to improved SAM statistic \code{samL1}).}
   \item{verbose}{print out some (more or less useful) information during computation.}
 }
 \details{
 \code{studentt.*} computes the standard equal variance t statistic.
-
-\code{diffmean.*} computes the difference of means (i.e. the fold-change for log-transformed data).
 
 \code{efront.*} computes the t statistic using the 90 \% rule of Efron et al. (2001).
 
@@ -82,7 +76,7 @@ and relative to the shrinkage t statistic in Opgen-Rhein and Strimmer (2007).
   and
   Korbinian Strimmer (\url{http://strimmerlab.org}).
 }
-\seealso{\code{\link{shrinkt.stat}}.}
+\seealso{\code{\link{diffmean.stat}}, \code{\link{shrinkt.stat}}, \code{\link{shrinkcat.stat}}.}
 
 \examples{
 # load st library 
@@ -110,11 +104,6 @@ sum( fdr.out$qval < 0.05 )
 sum( fdr.out$lfdr < 0.2 )
 fdr.out$param
 
-
-# difference of means /fold change statistic
-score = diffmean.stat(X, L)
-order(abs(score), decreasing=TRUE)[1:10]
-# [1]  4790  6620  1022 10979   970    35  2693  5762  5885     2
 
 # Efron t statistic (90 \% rule)
 score = efront.stat(X, L)

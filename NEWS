@@ -3,11 +3,20 @@
                =======================================
 
 
+		CHANGES IN `st' PACKAGE VERSION 1.1.1
+
+- rankprod.stat() and rankprod.fun() added for calculation of the
+  two-sided rank products statistic.
+- reference to Zuber and Strimmer (2009) added.
+- small corrections in the help pages, to pass the more stringent
+  checks on .Rd files introduced in R in January 2009.
+
+
 		CHANGES IN `st' PACKAGE VERSION 1.1.0
 
 - new functions shrinkcat.stat() und shrinkcat.fun() implementing
   a shrinkage estimate of the "correlation-adjusted t-score" described
-  in Zuber and Strimmer (2008).
+  in Zuber and Strimmer (2009).
 - part of the code was rewritten to share code with the "sda" package 
   (exploiting the link between discriminant analysis and gene ranking). 
 

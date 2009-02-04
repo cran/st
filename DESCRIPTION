@@ -1,6 +1,6 @@
 Package: st
-Version: 1.1.0
-Date: 2008-12-13
+Version: 1.1.1
+Date: 2009-02-04
 Title: Shrinkage t Statistic and Correlation-Adjusted t Score
 Author: Rainer Opgen-Rhein, Verena Zuber, and Korbinian Strimmer.
 Maintainer: Korbinian Strimmer <strimmer@uni-leipzig.de>
@@ -9,9 +9,9 @@ Suggests: limma, samr
 Description: This package implements the "shrinkage t" statistic 
    introduced in Opgen-Rhein and Strimmer (2007) and a shrinkage estimate
    of the "correlation-adjusted t-score" (cat score) described in
-   Zuber and Strimmer (2008).  It also offers a convenient interface 
+   Zuber and Strimmer (2009).  It also offers a convenient interface 
    to a number of other regularized t-statistics commonly 
    employed in high-dimensional case-control studies.    
 License: GPL (>= 3)
 URL: http://strimmerlab.org/software/st/
-Packaged: Sat Dec 13 16:36:07 2008; strimmer
+Packaged: Wed Feb  4 22:07:27 2009; strimmer

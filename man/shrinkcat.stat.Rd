@@ -11,7 +11,7 @@ shrinkcat.fun(L, verbose=TRUE)
 \description{
   \code{shrinkcat.stat} and \code{shrinkcat.fun} computes a shrinkage
    estimate of the ``correlation-adjusted t score''
-   of Zuber and Strimmer (2008).
+   of Zuber and Strimmer (2009).
 }
 
 \arguments{
@@ -22,7 +22,7 @@ shrinkcat.fun(L, verbose=TRUE)
 }
 \details{
   The cat (``correlation-adjusted t'') score is the product of the square root of the
-  inverse correlation matrix with a vector of t scores.  In Zuber and Strimmer (2008)
+  inverse correlation matrix with a vector of t scores.  In Zuber and Strimmer (2009)
   it is shown that the cat score is
   a natural criterion to rank genes according to their ability to seperate two classes
   in the presence of correlation among genes.
@@ -39,8 +39,8 @@ shrinkcat.fun(L, verbose=TRUE)
 }
 
 \references{
-Zuber, V., and K. Strimmer. 2008.  Gene ranking and differential expression
-under correlation. In preparation.
+Zuber, V., and K. Strimmer. 2009.  Gene ranking and biomarker discovery under correlation.
+See \url{http://arxiv.org/abs/0902.0751} for publication details.
 }
 \author{
   Verena Zuber 
