@@ -20,5 +20,10 @@ This package implements the "shrinkage t" statistic
 }
 \keyword{univar}
 \seealso{
-\code{\link{studentt.stat}, \link{shrinkt.stat}, \link{shrinkcat.stat}.}
+\code{\link{shrinkt.stat}}, 
+\code{\link{shrinkcat.stat}}, 
+\code{\link{modt.stat}}, 
+\code{\link{cst.stat}}, 
+\code{\link{lait.stat}}.
 }
+

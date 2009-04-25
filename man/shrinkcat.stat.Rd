@@ -9,7 +9,7 @@ shrinkcat.fun(L, verbose=TRUE)
 }
 
 \description{
-  \code{shrinkcat.stat} and \code{shrinkcat.fun} computes a shrinkage
+  \code{shrinkcat.stat} and \code{shrinkcat.fun} compute a shrinkage
    estimate of the ``correlation-adjusted t score''
    of Zuber and Strimmer (2009).
 }
@@ -47,36 +47,38 @@ See \url{http://arxiv.org/abs/0902.0751} for publication details.
   and
   Korbinian Strimmer (\url{http://strimmerlab.org}).
 }
-\seealso{\code{\link{shrinkt.stat}}.}
+\seealso{\code{\link{shrinkt.stat}}, \code{\link{cst.stat}}, \code{\link{lait.stat}}.}
 
 \examples{
 # load st library 
 library("st")
 
 
-# load full Khan et al (2001) data set
-data(khan2001)
+# load st library 
+library("st")
 
-# create data set containing only the RMS and EWS samples
-idx = which( khan2001$y == "RMS" | khan2001$y == "EWS")
-X = khan2001$x[idx,]
-L = factor(khan2001$y[idx])
-dim(X)
-L
+# prostate data set
+data(singh2002)
+X = singh2002$x
+L = singh2002$y
+
+dim(X)      # 102 6033 
+length(L)   # 102
 
 
 # shrinkage cat statistic
+\dontrun{
 score = shrinkcat.stat(X, L)
 idx = order(abs(score), decreasing=TRUE)
 idx[1:10]
-# [1] 1389 1955  509 1003  246  187 2050 2046  545 1954
+# 610  364 1720 3647 3375  332 3282 3991 1557  914
 
 # compute q-values and local false discovery rates
 library("fdrtool")
 fdr.out = fdrtool(as.vector(score))
 sum(fdr.out$qval < 0.05)
 sum(fdr.out$lfdr < 0.2)
-
+}
 
 # compared with:
 
@@ -84,18 +86,18 @@ sum(fdr.out$lfdr < 0.2)
 score = shrinkt.stat(X, L)
 idx = order(abs(score), decreasing=TRUE)
 idx[1:10]
-# [1] 1389 1955  187  246 1003 2046 2050  509  545 1799
+# 610 1720 3940  914  364  332 3647 4331  579 1068
 
-# student t statistic
+# Student t statistic
 score = studentt.stat(X, L)
 idx = order(abs(score), decreasing=TRUE)
 idx[1:10]
-# 1] 1389 1955 1003  187  246 2050 2046 1799  509  545
+# 610 1720  364  332  914 3940 4546 1068  579 4331
 
 # difference of means ("Fold Change")
 score = diffmean.stat(X, L)
 idx = order(abs(score), decreasing=TRUE)
 idx[1:10]
-# [1]  509  187 1372 1955  246 1954  430 1645  545  129
+# 735  610  694  298  698  292  739 3940  702  721
 }
 \keyword{univar}

@@ -3,6 +3,13 @@
                =======================================
 
 
+		CHANGES IN `st' PACKAGE VERSION 1.1.2
+
+- correlation-shared t-statistic of Tibshirani and Wasserman 
+  (2006) added: new functions cst.stat() and cst.fun().
+- correlation-predicted t-statistic of Lai (2008) added:
+  new functions lait.stat(), lait.fun() and lai.tscore().
+
 		CHANGES IN `st' PACKAGE VERSION 1.1.1
 
 - rankprod.stat() and rankprod.fun() added for calculation of the
