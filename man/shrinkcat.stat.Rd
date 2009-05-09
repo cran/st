@@ -4,8 +4,8 @@
 \title{Correlation-Adjusted t Score}
 
 \usage{
-shrinkcat.stat(X, L, verbose=TRUE)
-shrinkcat.fun(L, verbose=TRUE)
+shrinkcat.stat(X, L, group.thresh = 1, verbose=TRUE)
+shrinkcat.fun(L, group.thresh = 1, verbose=TRUE)
 }
 
 \description{
@@ -18,16 +18,29 @@ shrinkcat.fun(L, verbose=TRUE)
   \item{X}{data matrix. Note that the \emph{columns} correspond to variables (``genes'')
            and the \emph{rows} to samples.}
   \item{L}{vector with class labels for the two groups. }
+  \item{group.thresh}{controls the grouping of features. 
+                       If \code{group.thresh} equals
+                     1 no grouping occurs (the default).}
   \item{verbose}{print out some (more or less useful) information during computation.}
 }
 \details{
   The cat (``correlation-adjusted t'') score is the product of the square root of the
-  inverse correlation matrix with a vector of t scores.  In Zuber and Strimmer (2009)
+  inverse correlation matrix with a vector of t scores. The cat score thus describes the 
+  contribution of each individual feature in separating the two groups, 
+  after removing the effect of all other features.
+
+   In Zuber and Strimmer (2009)
   it is shown that the cat score is
-  a natural criterion to rank genes according to their ability to seperate two classes
-  in the presence of correlation among genes.
+  a natural criterion to rank features in the presence of correlation.
   If there is no correlation, the cat score reduces to the usual t score
   (hence in this case the estimate from \code{shrinkcat.stat} equals that from \code{\link{shrinkt.stat}}).
+
+  Additionally, the option \code{group.thresh} allows to specify a correlation neighborhood
+  around a feature.  In this neighborhood determined by absolute empirical correlation
+   the grouped cat score is computed, a variant of the Hotelling T2 statistic
+    summarizing the total contribution of the whole feature set for distinguishing the two groups.  
+ If the neighborhood contains only a single feature the grouped cat score is identical to the cat score.
+  
 }
 \value{
   \code{shrinkcat.stat} returns a vector containing a shrinkage estimate of the
@@ -50,10 +63,6 @@ See \url{http://arxiv.org/abs/0902.0751} for publication details.
 \seealso{\code{\link{shrinkt.stat}}, \code{\link{cst.stat}}, \code{\link{lait.stat}}.}
 
 \examples{
-# load st library 
-library("st")
-
-
 # load st library 
 library("st")
 

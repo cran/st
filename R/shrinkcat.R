@@ -1,8 +1,8 @@
-### shrinkcat.R  (2008-12-01)
+### shrinkcat.R  (2009-04-28)
 ###
 ###    Shrinkage Estimation of Correlation-Adjusted t Statistic
 ###
-### Copyright 2008 Verena Zuber and Korbinian Strimmer
+### Copyright 2008-2009 Verena Zuber and Korbinian Strimmer
 ###
 ###
 ### This file is part of the `st' library for R and related languages.
@@ -22,18 +22,19 @@
 ### MA 02111-1307, USA
 
 
-shrinkcat.stat = function (X, L, verbose=TRUE)
+shrinkcat.stat = function (X, L, group.thresh = 1, verbose=TRUE)
 {
-  FUN = shrinkcat.fun(L=L, verbose=verbose)
+  FUN = shrinkcat.fun(L=L, group.thresh=group.thresh, verbose=verbose)
   score = FUN(X)
   
   return( score )
 }
 
 
-shrinkcat.fun = function (L, verbose=TRUE)
+shrinkcat.fun = function (L, group.thresh = 1, verbose=TRUE)
 {
     if (missing(L)) stop("Class labels are missing!")
+    if (group.thresh > 1 || group.thresh < 0) stop("group.thresh must be chosen from the interval [0,1]")
   
     function(X)
     {
@@ -65,9 +66,35 @@ shrinkcat.fun = function (L, verbose=TRUE)
         cat = crossprod(tmp$powcor.pooled, t) # decorrelate t
 
       cat = as.vector(cat)
+
+      if (group.thresh < 1)
+      {
+        if (verbose) cat("Compute grouped cat scores using empirical correlation threshold", group.thresh, "\n")
+        cat = pvt.groupcat(X, L, cat, group.thresh)
+        attr(cat, "group.thresh") = group.thresh
+      }
+
       attr(cat, "lambda.var") = attr(tmp$var.pooled, "lambda.var")
       attr(cat, "lambda") = attr(tmp$powcor.pooled, "lambda")
 
       return(cat)
     }
 }
+
+
+pvt.groupcat = function(X, L, cat, group.thresh)
+{
+  tmp = centroids(X, L, var.pooled=FALSE, var.groups=FALSE, 
+          powcor.pooled=TRUE, alpha=1,  shrink=FALSE, verbose=FALSE)
+  R = tmp$powcor.pooled 
+  p = dim(R)[1]	
+  gcat = numeric(p)
+  for (i in 1:p)
+  {
+    w = which( abs(R[i,]) >= group.thresh)
+    gcat[i] = sqrt( sum( cat[w]^2 ) ) * sign(cat[i])
+  }
+
+  return (gcat)
+}
+

@@ -3,6 +3,12 @@
                =======================================
 
 
+		CHANGES IN `st' PACKAGE VERSION 1.1.3
+
+- added option "group.thresh" to allow the specification of 
+  correlation neighborhoods around features and the computation
+  of the grouped cat score.
+
 		CHANGES IN `st' PACKAGE VERSION 1.1.2
 
 - correlation-shared t-statistic of Tibshirani and Wasserman 

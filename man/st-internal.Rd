@@ -1,6 +1,7 @@
 \name{st-internal}
 
 \alias{pvt.samL1.get.lambda}
+\alias{pvt.groupcat}
 
 \title{Internal st Functions}
 \description{
