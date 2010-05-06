@@ -4,8 +4,8 @@
 \title{Correlation-Adjusted t Score}
 
 \usage{
-shrinkcat.stat(X, L, group.thresh = 1, verbose=TRUE)
-shrinkcat.fun(L, group.thresh = 1, verbose=TRUE)
+shrinkcat.stat(X, L, group.thresh = 1, group.method=c("neighborhood", "graphcluster"), verbose=TRUE)
+shrinkcat.fun(L, group.thresh = 1, group.method=c("neighborhood", "graphcluster"), verbose=TRUE)
 }
 
 \description{
@@ -21,6 +21,8 @@ shrinkcat.fun(L, group.thresh = 1, verbose=TRUE)
   \item{group.thresh}{controls the grouping of features. 
                        If \code{group.thresh} equals
                      1 no grouping occurs (the default).}
+  \item{group.method}{determines the way the grouping of features is performed: either a correlation neighborhood is used,
+                       or the clusters of the correlation threshold graph.}
   \item{verbose}{print out some (more or less useful) information during computation.}
 }
 \details{
@@ -35,9 +37,9 @@ shrinkcat.fun(L, group.thresh = 1, verbose=TRUE)
   If there is no correlation, the cat score reduces to the usual t score
   (hence in this case the estimate from \code{shrinkcat.stat} equals that from \code{\link{shrinkt.stat}}).
 
-  Additionally, the option \code{group.thresh} allows to specify a correlation neighborhood
-  around a feature.  In this neighborhood determined by absolute empirical correlation
-   the grouped cat score is computed, a variant of the Hotelling T2 statistic
+  Additionally, the option \code{group.thresh} allows to specify a correlation group
+  for a feature.  In this neighborhood determined by absolute empirical correlation
+   the grouped cat score is computed, which is a variant of the Hotelling T2 statistic
     summarizing the total contribution of the whole feature set for distinguishing the two groups.  
  If the neighborhood contains only a single feature the grouped cat score is identical to the cat score.
   

@@ -1,8 +1,8 @@
-### shrinkcat.R  (2009-04-28)
+### shrinkcat.R  (2010-05-05)
 ###
 ###    Shrinkage Estimation of Correlation-Adjusted t Statistic
 ###
-### Copyright 2008-2009 Verena Zuber and Korbinian Strimmer
+### Copyright 2008-2010 Verena Zuber and Korbinian Strimmer
 ###
 ###
 ### This file is part of the `st' library for R and related languages.
@@ -22,17 +22,22 @@
 ### MA 02111-1307, USA
 
 
-shrinkcat.stat = function (X, L, group.thresh = 1, verbose=TRUE)
+shrinkcat.stat = function (X, L, group.thresh = 1,
+  group.method=c("neighborhood", "graphcluster"), verbose=TRUE)
 {
-  FUN = shrinkcat.fun(L=L, group.thresh=group.thresh, verbose=verbose)
+  FUN = shrinkcat.fun(L=L, group.thresh=group.thresh,
+    group.method=group.method, verbose=verbose)
   score = FUN(X)
   
   return( score )
 }
 
 
-shrinkcat.fun = function (L, group.thresh = 1, verbose=TRUE)
+shrinkcat.fun = function (L, group.thresh = 1,
+  group.method=c("neighborhood", "graphcluster"), verbose=TRUE)
 {
+    group.method = match.arg(group.method)
+
     if (missing(L)) stop("Class labels are missing!")
     if (group.thresh > 1 || group.thresh < 0) stop("group.thresh must be chosen from the interval [0,1]")
   
@@ -69,9 +74,16 @@ shrinkcat.fun = function (L, group.thresh = 1, verbose=TRUE)
 
       if (group.thresh < 1)
       {
-        if (verbose) cat("Compute grouped cat scores using empirical correlation threshold", group.thresh, "\n")
-        cat = pvt.groupcat(X, L, cat, group.thresh)
+        if (verbose)
+        {
+          cat("Compute grouped cat scores using empirical correlation threshold", group.thresh, "\n")
+          if (group.method == "neighborhood") cat("Grouping method: correlation neighborhood\n")
+          if (group.method == "graphcluster") cat("Grouping method: clusters of threshold graph\n")
+        }
+
+        cat = pvt.groupcat(X, L, cat, group.thresh, group.method)
         attr(cat, "group.thresh") = group.thresh
+        attr(cat, "group.method") = group.method
       }
 
       attr(cat, "lambda.var") = attr(tmp$var.pooled, "lambda.var")
@@ -82,17 +94,37 @@ shrinkcat.fun = function (L, group.thresh = 1, verbose=TRUE)
 }
 
 
-pvt.groupcat = function(X, L, cat, group.thresh)
+# determine grouped cat score
+# grouping methods:  "neighborhood" = correlation neighborhood (possibly overlapping groups)
+#                    "graphcluster" = cluster in threshold graph (disjoint groups)
+
+pvt.groupcat = function(X, L, cat, group.thresh, group.method)
 {
   tmp = centroids(X, L, var.pooled=FALSE, var.groups=FALSE, 
-          powcor.pooled=TRUE, alpha=1,  shrink=FALSE, verbose=FALSE)
+          powcor.pooled=TRUE, alpha=1, shrink=FALSE, verbose=FALSE)
   R = tmp$powcor.pooled 
   p = dim(R)[1]	
   gcat = numeric(p)
-  for (i in 1:p)
+
+  if (group.method == "neighborhood")
   {
-    w = which( abs(R[i,]) >= group.thresh)
-    gcat[i] = sqrt( sum( cat[w]^2 ) ) * sign(cat[i])
+    for (i in 1:p)
+    {
+      w = which( abs(R[i,]) >= group.thresh)
+      gcat[i] = sqrt( sum( cat[w]^2 ) ) * sign(cat[i])
+    }
+  }
+  if (group.method == "graphcluster")
+  {
+    bin.mat = ifelse(abs(R) >= group.thresh, 1, 0)
+    require("igraph")
+    g = graph.adjacency(bin.mat, mode="undirected")
+    mem = clusters(g)$membership
+    for (i in 1:p)
+    {
+      w = which(mem == mem[i])
+      gcat[i] = sqrt(sum(cat[w]^2)) * sign(cat[i])
+    }
   }
 
   return (gcat)
