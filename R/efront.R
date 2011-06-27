@@ -1,8 +1,8 @@
-### efront.R  (2008-11-19)
+### efront.R  (2011-06-21)
 ###
 ###    Efron t Statistic (2001)
 ###
-### Copyright 2006-2008 Rainer Opgen-Rhein and Korbinian Strimmer
+### Copyright 2006-2011 Rainer Opgen-Rhein and Korbinian Strimmer
 ###
 ###
 ### This file is part of the `st' library for R and related languages.
@@ -36,7 +36,7 @@ efront.fun <- function (L, verbose=TRUE)
 
     function(X)
     {
-      tmp = centroids(X, L, var.pooled=TRUE, var.groups=FALSE, shrink=FALSE, verbose=verbose)
+      tmp = centroids(X, L, var.groups=FALSE, shrink=FALSE, verbose=verbose)
       
       # differences between the two groups
       diff = tmp$means[,1]-tmp$means[,2]
@@ -44,7 +44,7 @@ efront.fun <- function (L, verbose=TRUE)
       # standard error of diff
       n1 = tmp$samples[1]
       n2 = tmp$samples[2]
-      v =  tmp$var.pooled   
+      v =  tmp$variances[,1]  # pooled variance  
       sd = sqrt( (1/n1 + 1/n2)*v )
       
       # tuning parameter

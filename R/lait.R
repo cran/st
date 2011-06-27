@@ -1,8 +1,8 @@
-### lait.R  (2009-04-20)
+### lait.R  (2011-06-26)
 ###
 ###    Correlation-Predicted t-Statistic of Lai
 ###
-### Copyright 2009 Verena Zuber and Korbinian Strimmer
+### Copyright 2009-11 Verena Zuber and Korbinian Strimmer
 ###
 ### Parts of the code are adopted from example code by Yinglai Lai
 ###
@@ -37,7 +37,7 @@ lait.fun = function (L, f=0.2, verbose=TRUE)
  
   function(X)
   { 
-    tmp = centroids(X, L, var.pooled=TRUE, var.groups=FALSE, powcor.pooled=TRUE, alpha=1, 
+    tmp = centroids(X, L, var.groups=FALSE, centered.data=TRUE,
               shrink=FALSE, verbose=verbose)
       
     # differences between the two groups
@@ -46,11 +46,11 @@ lait.fun = function (L, f=0.2, verbose=TRUE)
     # standard error of diff
     n1 = tmp$samples[1]
     n2 = tmp$samples[2]
-    v =  tmp$var.pooled   
+    v =  tmp$variances[,1]  # pooled variance  
     sd = sqrt( (1/n1 + 1/n2)*v )
       
     # pooled empirical correlation matrix
-    R = tmp$powcor.pooled 	
+    R = cor(tmp$centered.data) 	
 
     # t statistic
     t = diff/sd

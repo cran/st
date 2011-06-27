@@ -1,8 +1,8 @@
-### studentt.R  (2008-11-19)
+### studentt.R  (2011-06-26)
 ###
 ###    Student t statistic and related stuff
 ###
-### Copyright 2006-2008 Rainer Opgen-Rhein and Korbinian Strimmer
+### Copyright 2006-2011 Rainer Opgen-Rhein and Korbinian Strimmer
 ###
 ###
 ### This file is part of the `st' library for R and related languages.
@@ -38,7 +38,7 @@ diffmean.fun = function (L)
     
     function(X)
     { 
-      tmp = centroids(X, L, var.pooled=FALSE, var.groups=FALSE, shrink=FALSE, verbose=TRUE)
+      tmp = centroids(X, L, var.groups=FALSE, shrink=FALSE, verbose=TRUE)
       
       # differences between the two groups
       diff = tmp$means[,1]-tmp$means[,2]
@@ -64,7 +64,7 @@ studentt.fun = function (L)
  
     function(X)
     { 
-      tmp = centroids(X, L, var.pooled=TRUE, var.groups=FALSE, shrink=FALSE, verbose=TRUE)
+      tmp = centroids(X, L, var.groups=FALSE, shrink=FALSE, verbose=TRUE)
       
       # differences between the two groups
       diff = tmp$means[,1]-tmp$means[,2]
@@ -72,7 +72,7 @@ studentt.fun = function (L)
       # standard error of diff
       n1 = tmp$samples[1]
       n2 = tmp$samples[2]
-      v =  tmp$var.pooled   
+      v =  tmp$variances[,1]  # pooled variance    
       sd = sqrt( (1/n1 + 1/n2)*v )
       
       # t statistic

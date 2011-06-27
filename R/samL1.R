@@ -1,8 +1,8 @@
-### samL1.R  (2008-11-19)
+### samL1.R  (2011-06-26)
 ###
 ###    Wu (2005)Improved SAM Statistic
 ###
-### Copyright 2006-2008 Rainer Opgen-Rhein and Korbinian Strimmer
+### Copyright 2006-2011 Rainer Opgen-Rhein and Korbinian Strimmer
 ###
 ### This function is based in part on R code provided by Baolin Wu.
 ###
@@ -48,7 +48,7 @@ samL1.fun <- function (L, method=c("lowess", "cor"),
      
     function(X)
     {
-      tmp = centroids(X, L, var.pooled=TRUE, var.groups=FALSE, shrink=FALSE, verbose=verbose)
+      tmp = centroids(X, L, var.groups=FALSE, shrink=FALSE, verbose=verbose)
       
       # differences between the two groups
       diff = tmp$means[,1]-tmp$means[,2]
@@ -56,7 +56,7 @@ samL1.fun <- function (L, method=c("lowess", "cor"),
       # variance of diff
       n1 = tmp$samples[1]
       n2 = tmp$samples[2]
-      v.diff = (1/n1 + 1/n2)*tmp$var.pooled  
+      v.diff = (1/n1 + 1/n2)*tmp$variances[,1]
       sd = sqrt(v.diff)
       
       lambda = pvt.samL1.get.lambda(diff, sd, method=method, verbose=verbose, plot=plot)

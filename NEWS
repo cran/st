@@ -3,11 +3,21 @@
                =======================================
 
 
+		CHANGES IN `st' PACKAGE VERSION 1.1.5
+
+- small changes in the code needed to work with the modified centroids 
+  function from the sda package version 1.2.0 
+- neighborhood options removed from shrinkcat.stat()
+- shrinkcat.stat() now uses catscore() function from sda package
+  (this is much faster than the version previously implemented in "st")
+
+
 		CHANGES IN `st' PACKAGE VERSION 1.1.4
 
 - added option "group.method".  Now groups are determined either
   by the correlation neighborhood (possibly overlapping groups) or 
   by the clusters on the correlation graph (disjoint groups). 
+
 
 		CHANGES IN `st' PACKAGE VERSION 1.1.3
 
@@ -15,12 +25,14 @@
   correlation neighborhoods around features and the computation
   of the grouped cat score.
 
+
 		CHANGES IN `st' PACKAGE VERSION 1.1.2
 
 - correlation-shared t-statistic of Tibshirani and Wasserman 
   (2006) added: new functions cst.stat() and cst.fun().
 - correlation-predicted t-statistic of Lai (2008) added:
   new functions lait.stat(), lait.fun() and lai.tscore().
+
 
 		CHANGES IN `st' PACKAGE VERSION 1.1.1
 

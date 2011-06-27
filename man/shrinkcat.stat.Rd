@@ -4,8 +4,8 @@
 \title{Correlation-Adjusted t Score}
 
 \usage{
-shrinkcat.stat(X, L, group.thresh = 1, group.method=c("neighborhood", "graphcluster"), verbose=TRUE)
-shrinkcat.fun(L, group.thresh = 1, group.method=c("neighborhood", "graphcluster"), verbose=TRUE)
+shrinkcat.stat(X, L, verbose=TRUE)
+shrinkcat.fun(L, verbose=TRUE)
 }
 
 \description{
@@ -18,11 +18,6 @@ shrinkcat.fun(L, group.thresh = 1, group.method=c("neighborhood", "graphcluster"
   \item{X}{data matrix. Note that the \emph{columns} correspond to variables (``genes'')
            and the \emph{rows} to samples.}
   \item{L}{vector with class labels for the two groups. }
-  \item{group.thresh}{controls the grouping of features. 
-                       If \code{group.thresh} equals
-                     1 no grouping occurs (the default).}
-  \item{group.method}{determines the way the grouping of features is performed: either a correlation neighborhood is used,
-                       or the clusters of the correlation threshold graph.}
   \item{verbose}{print out some (more or less useful) information during computation.}
 }
 \details{
@@ -36,12 +31,6 @@ shrinkcat.fun(L, group.thresh = 1, group.method=c("neighborhood", "graphcluster"
   a natural criterion to rank features in the presence of correlation.
   If there is no correlation, the cat score reduces to the usual t score
   (hence in this case the estimate from \code{shrinkcat.stat} equals that from \code{\link{shrinkt.stat}}).
-
-  Additionally, the option \code{group.thresh} allows to specify a correlation group
-  for a feature.  In this neighborhood determined by absolute empirical correlation
-   the grouped cat score is computed, which is a variant of the Hotelling T2 statistic
-    summarizing the total contribution of the whole feature set for distinguishing the two groups.  
- If the neighborhood contains only a single feature the grouped cat score is identical to the cat score.
   
 }
 \value{
@@ -55,14 +44,15 @@ shrinkcat.fun(L, group.thresh = 1, group.method=c("neighborhood", "graphcluster"
 
 \references{
 Zuber, V., and K. Strimmer. 2009.  Gene ranking and biomarker discovery under correlation.
-See \url{http://arxiv.org/abs/0902.0751} for publication details.
+Bioinformatics 25: 2700-2707.
+Preprint available from \url{http://arxiv.org/abs/0902.0751}.
 }
 \author{
   Verena Zuber 
   and
   Korbinian Strimmer (\url{http://strimmerlab.org}).
 }
-\seealso{\code{\link{shrinkt.stat}}, \code{\link{cst.stat}}, \code{\link{lait.stat}}.}
+\seealso{\code{\link[sda]{catscore}}, \code{\link{shrinkt.stat}}, \code{\link{cst.stat}}, \code{\link{lait.stat}}.}
 
 \examples{
 # load st library 

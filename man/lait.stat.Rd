@@ -102,8 +102,8 @@ cor(t, score7, method="spearman") # 0.4666669
 
 # focus on gene 19
 t = studentt.stat(X, L)
-R = centroids(X, L,  powcor.pooled=TRUE, alpha=1, 
-              shrink=FALSE, verbose=TRUE)$powcor.pooled
+R = cor(centroids(X, L, centered.data=TRUE,
+              shrink=FALSE, verbose=TRUE)$centered.data)
 
 lai.tscore(gene=19, t, R, f=0.5, plot=TRUE)
 }

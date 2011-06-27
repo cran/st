@@ -1,8 +1,8 @@
-### shrinkt.R  (2008-10-27)
+### shrinkt.R  (2011-06-26)
 ###
 ###    Shrinkage t Statistic
 ###
-### Copyright 2006-2008 Rainer Opgen-Rhein and Korbinian Strimmer
+### Copyright 2006-2011 Rainer Opgen-Rhein and Korbinian Strimmer
 ###
 ###
 ### This file is part of the `st' library for R and related languages.
@@ -42,7 +42,7 @@ shrinkt.fun = function (L, var.equal=TRUE, verbose=TRUE)
 
       if (var.equal) # compute pooled variance
       {
-        tmp = centroids(X, L, var.pooled=TRUE, var.groups=FALSE, shrink=TRUE, verbose=verbose)
+        tmp = centroids(X, L, var.groups=FALSE, shrink=TRUE, verbose=verbose)
         n1 = tmp$samples[1]
         n2 = tmp$samples[2]
       
@@ -52,20 +52,20 @@ shrinkt.fun = function (L, var.equal=TRUE, verbose=TRUE)
         # standard error of diff
         n1 = tmp$samples[1]
         n2 = tmp$samples[2]
-        v =  tmp$var.pooled   
+        v =  tmp$variances[,1]  # pooled variance 
         sd = sqrt( (1/n1 + 1/n2)*v )
       }
       else # allow different variances in each class
       {
-        tmp = centroids(X, L, var.pooled=FALSE, var.groups=TRUE, shrink=TRUE, verbose=verbose)
+        tmp = centroids(X, L, var.groups=TRUE, shrink=TRUE, verbose=verbose)
         n1 = tmp$samples[1]
         n2 = tmp$samples[2]
       
         # differences between the two groups
         diff = tmp$means[,1]-tmp$means[,2]
 
-        v1 = as.vector(tmp$var.groups[,1])
-        v2 = as.vector(tmp$var.groups[,2])
+        v1 = as.vector(tmp$variances[,1])
+        v2 = as.vector(tmp$variances[,2])
    
         # standard error of diff 
         sd = sqrt( v1/n1 + v2/n2 )
