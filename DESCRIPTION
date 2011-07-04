@@ -1,6 +1,6 @@
 Package: st
-Version: 1.1.5
-Date: 2011-06-27
+Version: 1.1.6
+Date: 2011-07-04
 Title: Shrinkage t Statistic and CAT Score
 Author: Rainer Opgen-Rhein, Verena Zuber, and Korbinian Strimmer.
 Maintainer: Korbinian Strimmer <strimmer@uni-leipzig.de>
@@ -15,6 +15,6 @@ Description: This package implements the "shrinkage t" statistic
         studies.
 License: GPL (>= 3)
 URL: http://strimmerlab.org/software/st/
-Packaged: 2011-06-28 10:16:34 UTC; strimmer
+Packaged: 2011-07-04 13:26:42 UTC; strimmer
 Repository: CRAN
-Date/Publication: 2011-06-28 10:18:33
+Date/Publication: 2011-07-05 08:44:28

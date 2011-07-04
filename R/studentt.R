@@ -1,4 +1,4 @@
-### studentt.R  (2011-06-26)
+### studentt.R  (2011-07-04)
 ###
 ###    Student t statistic and related stuff
 ###
@@ -38,7 +38,7 @@ diffmean.fun = function (L)
     
     function(X)
     { 
-      tmp = centroids(X, L, var.groups=FALSE, shrink=FALSE, verbose=TRUE)
+      tmp = centroids(X, L, var.groups=FALSE, shrink=FALSE, verbose=FALSE)
       
       # differences between the two groups
       diff = tmp$means[,1]-tmp$means[,2]
@@ -64,7 +64,7 @@ studentt.fun = function (L)
  
     function(X)
     { 
-      tmp = centroids(X, L, var.groups=FALSE, shrink=FALSE, verbose=TRUE)
+      tmp = centroids(X, L, var.groups=FALSE, shrink=FALSE, verbose=FALSE)
       
       # differences between the two groups
       diff = tmp$means[,1]-tmp$means[,2]

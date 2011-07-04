@@ -2,6 +2,11 @@
                  RELEASE HISTORY OF THE "st" PACKAGE
                =======================================
 
+		CHANGES IN `st' PACKAGE VERSION 1.1.6
+
+- small change in studentt.fun and diffmean.fun to avoid uncessary
+  verbose output
+
 
 		CHANGES IN `st' PACKAGE VERSION 1.1.5
 
