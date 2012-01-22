@@ -2,6 +2,12 @@
                  RELEASE HISTORY OF THE "st" PACKAGE
                =======================================
 
+
+		CHANGES IN `st' PACKAGE VERSION 1.1.7
+
+- NAMESPACE file added
+
+
 		CHANGES IN `st' PACKAGE VERSION 1.1.6
 
 - small change in studentt.fun and diffmean.fun to avoid uncessary
