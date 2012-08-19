@@ -1,10 +1,10 @@
 Package: st
-Version: 1.1.7
-Date: 2012-01-22
+Version: 1.1.8
+Date: 2012-08-19
 Title: Shrinkage t Statistic and CAT Score
 Author: Rainer Opgen-Rhein, Verena Zuber, and Korbinian Strimmer.
 Maintainer: Korbinian Strimmer <strimmer@uni-leipzig.de>
-Depends: R (>= 2.10.0), sda (>= 1.2.1), fdrtool (>= 1.2.8)
+Depends: R (>= 2.10.0), sda (>= 1.2.2), fdrtool (>= 1.2.10)
 Suggests: limma, samr
 Description: This package implements the "shrinkage t" statistic
         introduced in Opgen-Rhein and Strimmer (2007) and a shrinkage
@@ -15,6 +15,6 @@ Description: This package implements the "shrinkage t" statistic
         studies.
 License: GPL (>= 3)
 URL: http://strimmerlab.org/software/st/
-Packaged: 2012-01-22 11:00:36 UTC; strimmer
+Packaged: 2012-08-19 18:40:53 UTC; strimmer
 Repository: CRAN
-Date/Publication: 2012-01-22 12:03:14
+Date/Publication: 2012-08-20 04:37:02

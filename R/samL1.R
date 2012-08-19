@@ -1,8 +1,8 @@
-### samL1.R  (2011-06-26)
+### samL1.R  (2012-08-19)
 ###
-###    Wu (2005)Improved SAM Statistic
+###    Wu (2005) Improved SAM Statistic
 ###
-### Copyright 2006-2011 Rainer Opgen-Rhein and Korbinian Strimmer
+### Copyright 2006-2012 Rainer Opgen-Rhein and Korbinian Strimmer
 ###
 ### This function is based in part on R code provided by Baolin Wu.
 ###
@@ -48,7 +48,7 @@ samL1.fun <- function (L, method=c("lowess", "cor"),
      
     function(X)
     {
-      tmp = centroids(X, L, var.groups=FALSE, shrink=FALSE, verbose=verbose)
+      tmp = centroids(X, L, lambda.var=0, var.groups=FALSE, verbose=verbose)
       
       # differences between the two groups
       diff = tmp$means[,1]-tmp$means[,2]

@@ -1,8 +1,8 @@
-### studentt.R  (2011-07-04)
+### studentt.R  (2012-08-19)
 ###
 ###    Student t statistic and related stuff
 ###
-### Copyright 2006-2011 Rainer Opgen-Rhein and Korbinian Strimmer
+### Copyright 2006-2012 Rainer Opgen-Rhein and Korbinian Strimmer
 ###
 ###
 ### This file is part of the `st' library for R and related languages.
@@ -38,7 +38,7 @@ diffmean.fun = function (L)
     
     function(X)
     { 
-      tmp = centroids(X, L, var.groups=FALSE, shrink=FALSE, verbose=FALSE)
+      tmp = centroids(X, L, lambda.var=0, var.groups=FALSE, verbose=FALSE)
       
       # differences between the two groups
       diff = tmp$means[,1]-tmp$means[,2]
@@ -64,7 +64,7 @@ studentt.fun = function (L)
  
     function(X)
     { 
-      tmp = centroids(X, L, var.groups=FALSE, shrink=FALSE, verbose=FALSE)
+      tmp = centroids(X, L, lambda.var=0, var.groups=FALSE, verbose=FALSE)
       
       # differences between the two groups
       diff = tmp$means[,1]-tmp$means[,2]

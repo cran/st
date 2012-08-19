@@ -1,8 +1,8 @@
-### cst.R  (2011-06-21)
+### cst.R  (2012-08-19)
 ###
 ###    Correlation-Shared t-Statistic of Tibshirani-Wassermann
 ###
-### Copyright 2009-2011 Korbinian Strimmer
+### Copyright 2009-2012 Korbinian Strimmer
 ###
 ###
 ### This file is part of the `st' library for R and related languages.
@@ -37,7 +37,7 @@ cst.fun = function (L, verbose=TRUE)
     function(X)
     { 
       tmp = centroids(X, L, var.groups=FALSE, centered.data=TRUE,
-              shrink=FALSE, verbose=verbose)
+              lambda.var=0, verbose=verbose)
       
       # differences between the two groups
       diff = tmp$means[,1]-tmp$means[,2]

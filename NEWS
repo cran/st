@@ -3,6 +3,12 @@
                =======================================
 
 
+		CHANGES IN `st' PACKAGE VERSION 1.1.8
+
+- changes to work with the updated centroids() and catscore()
+  functions in sda version 1.2.2
+
+
 		CHANGES IN `st' PACKAGE VERSION 1.1.7
 
 - NAMESPACE file added

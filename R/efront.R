@@ -1,8 +1,8 @@
-### efront.R  (2011-06-21)
+### efront.R  (2012-08-19)
 ###
 ###    Efron t Statistic (2001)
 ###
-### Copyright 2006-2011 Rainer Opgen-Rhein and Korbinian Strimmer
+### Copyright 2006-2012 Rainer Opgen-Rhein and Korbinian Strimmer
 ###
 ###
 ### This file is part of the `st' library for R and related languages.
@@ -36,7 +36,7 @@ efront.fun <- function (L, verbose=TRUE)
 
     function(X)
     {
-      tmp = centroids(X, L, var.groups=FALSE, shrink=FALSE, verbose=verbose)
+      tmp = centroids(X, L, lambda.var=0, var.groups=FALSE, verbose=verbose)
       
       # differences between the two groups
       diff = tmp$means[,1]-tmp$means[,2]

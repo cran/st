@@ -1,8 +1,8 @@
-### shrinkt.R  (2011-06-26)
+### shrinkt.R  (2012-08-19)
 ###
 ###    Shrinkage t Statistic
 ###
-### Copyright 2006-2011 Rainer Opgen-Rhein and Korbinian Strimmer
+### Copyright 2006-2012 Rainer Opgen-Rhein and Korbinian Strimmer
 ###
 ###
 ### This file is part of the `st' library for R and related languages.
@@ -42,7 +42,7 @@ shrinkt.fun = function (L, var.equal=TRUE, verbose=TRUE)
 
       if (var.equal) # compute pooled variance
       {
-        tmp = centroids(X, L, var.groups=FALSE, shrink=TRUE, verbose=verbose)
+        tmp = centroids(X, L, var.groups=FALSE, verbose=verbose)
         n1 = tmp$samples[1]
         n2 = tmp$samples[2]
       
@@ -57,7 +57,7 @@ shrinkt.fun = function (L, var.equal=TRUE, verbose=TRUE)
       }
       else # allow different variances in each class
       {
-        tmp = centroids(X, L, var.groups=TRUE, shrink=TRUE, verbose=verbose)
+        tmp = centroids(X, L, var.groups=TRUE, verbose=verbose)
         n1 = tmp$samples[1]
         n2 = tmp$samples[2]
       

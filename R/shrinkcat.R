@@ -1,8 +1,8 @@
-### shrinkcat.R  (2011-06-26)
+### shrinkcat.R  (2012-08-19)
 ###
 ###    Shrinkage Estimation of Correlation-Adjusted t Statistic
 ###
-### Copyright 2008-2011 Verena Zuber and Korbinian Strimmer
+### Copyright 2008-2012 Verena Zuber and Korbinian Strimmer
 ###
 ###
 ### This file is part of the `st' library for R and related languages.
@@ -37,7 +37,7 @@ shrinkcat.fun = function (L, verbose=TRUE)
 
     function(X)
     {
-      cat =  catscore(X, L, shrink=TRUE, diagonal=FALSE, verbose=verbose)[,1]
+      cat =  catscore(X, L, diagonal=FALSE, verbose=verbose)[,1]
       return(cat)
     }
 }
