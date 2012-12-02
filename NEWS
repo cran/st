@@ -3,6 +3,18 @@
                =======================================
 
 
+		CHANGES IN `st' PACKAGE VERSION 1.2.0
+
+- one-sample shrinkage CAT scores and paired shrinkage CAT scores are now
+  implemented, as well as CAT scores with unequal variances. In addition,
+  the regularization parameters lambda and lambda.var can now be specified.
+- similary, estimation of one-sample shrinkage t-scores and paired 
+  shrinkage t-scores is now available, as well as optional specification 
+  of lambda.var regularization parameter.
+- in addtion, computation of the paired student t statistics as well as 
+  student t scores with unequal variance is now possible.
+
+
 		CHANGES IN `st' PACKAGE VERSION 1.1.8
 
 - changes to work with the updated centroids() and catscore()

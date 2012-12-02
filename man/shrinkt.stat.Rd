@@ -4,8 +4,8 @@
 \title{The Shrinkage t Statistic}
 
 \usage{
-shrinkt.stat(X, L, var.equal=TRUE, verbose=TRUE)
-shrinkt.fun(L, var.equal=TRUE, verbose=TRUE)
+shrinkt.stat(X, L, lambda.var, var.equal=TRUE, paired=FALSE, verbose=TRUE)
+shrinkt.fun(L, lambda.var, var.equal=TRUE, verbose=TRUE)
 }
 
 \description{
@@ -16,8 +16,13 @@ shrinkt.fun(L, var.equal=TRUE, verbose=TRUE)
 \arguments{
   \item{X}{data matrix. Note that the \emph{columns} correspond to variables (``genes'')
            and the \emph{rows} to samples.}
-  \item{L}{factor containing class labels for the two groups. }
+  \item{L}{factor with class labels for the two groups. If only a single label is given then a one-sample t-score against 0 is computed. }
+\item{lambda.var}{Shrinkage intensity for the variances. If not specified it is 
+    estimated from the data. \code{lambda.var=0} implies no shrinkage
+    and \code{lambda.var=1} complete shrinkage. }
+
   \item{var.equal}{assume equal (default) or unequal variances in each group.}
+\item{paired}{compute paired t-score (default is to use unpaired t-score).}
   \item{verbose}{print out some (more or less useful) information during computation.}
 }
 \details{
@@ -47,7 +52,7 @@ shrinkt.fun(L, var.equal=TRUE, verbose=TRUE)
  (\url{http://www.bepress.com/sagmb/vol6/iss1/art9/})  
 }
 \author{
-  Rainer Opgen-Rhein
+  Rainer Opgen-Rhein, Verena Zuber, 
   and
   Korbinian Strimmer (\url{http://strimmerlab.org}).
 }
@@ -76,14 +81,12 @@ order(abs(score), decreasing=TRUE)[1:10]
 # [1] 10979 11068    50  1022   724  5762    43  4790 10936  9939
 #  lambda.var (variance vector):  0.3882
 
-
 # shrinkage t statistic (unequal variances)
 score = shrinkt.stat(X, L, var.equal=FALSE)
 order(abs(score), decreasing=TRUE)[1:10]
 
 # [1] 11068    50 10979   724    43  1022  5762 10936  9939  9769
 #  lambda.var (variance vector):  0.3673   0.3362
-
 
 # compute q-values and local false discovery rates
 library("fdrtool")
@@ -92,6 +95,19 @@ sum( fdr.out$qval < 0.05 )
 sum( fdr.out$lfdr < 0.2 )
 fdr.out$param
 
- 
+
+# computation of paired t-score
+
+# paired shrinkage t statistic
+score = shrinkt.stat(X, L, paired=TRUE)
+order(abs(score), decreasing=TRUE)[1:10]
+# [1] 50  4790  5393 11068  5762 10238  9939   708   728    68
+
+# if there is no variance shrinkage the paired shrinkage t score reduces
+# to the conventional paired student t statistic
+score = studentt.stat(X, L, paired=TRUE)
+score2 = shrinkt.stat(X, L, lambda.var=0, paired=TRUE, verbose=FALSE)
+sum((score-score2)^2)
+
 }
 \keyword{univar}

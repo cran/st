@@ -98,13 +98,13 @@ cor(t, score3, method="spearman") # 0.471273
 cor(t, score5, method="spearman") # 0.4750564
 cor(t, score7, method="spearman") # 0.4666669
 
-}
-
 # focus on gene 19
 t = studentt.stat(X, L)
 R = cor(centroids(X, L, lambda.var=0, centered.data=TRUE,
               verbose=TRUE)$centered.data)
 
 lai.tscore(gene=19, t, R, f=0.5, plot=TRUE)
+
+}
 }
 \keyword{univar}

@@ -1,11 +1,11 @@
 \name{shrinkcat.stat}
 \alias{shrinkcat.stat}
 \alias{shrinkcat.fun}
-\title{Correlation-Adjusted t Score}
+\title{Correlation-Adjusted t Score (CAT score)}
 
 \usage{
-shrinkcat.stat(X, L, verbose=TRUE)
-shrinkcat.fun(L, verbose=TRUE)
+shrinkcat.stat(X, L, lambda, lambda.var, var.equal=TRUE, paired=FALSE, verbose=TRUE)
+shrinkcat.fun(L, lambda, lambda.var, var.equal=TRUE, verbose=TRUE)
 }
 
 \description{
@@ -17,21 +17,31 @@ shrinkcat.fun(L, verbose=TRUE)
 \arguments{
   \item{X}{data matrix. Note that the \emph{columns} correspond to variables (``genes'')
            and the \emph{rows} to samples.}
-  \item{L}{vector with class labels for the two groups. }
+  \item{L}{factor with class labels for the two groups. If only a single label is given then a one-sample CAT score against 0 is computed. }
+  \item{lambda}{Shrinkage intensity for the correlation matrix. If not specified it is 
+    estimated from the data. \code{lambda=0} implies no shrinkage
+    and \code{lambda=1} complete shrinkage. }
+  \item{lambda.var}{Shrinkage intensity for the variances. If not specified it is 
+    estimated from the data. \code{lambda.var=0} implies no shrinkage
+    and \code{lambda.var=1} complete shrinkage. }
+
+  \item{var.equal}{assume equal (default) or unequal variances in each group.}
+  \item{paired}{compute paired CAT score (default is to use unpaired CAT score).}
   \item{verbose}{print out some (more or less useful) information during computation.}
 }
 \details{
-  The cat (``correlation-adjusted t'') score is the product of the square root of the
-  inverse correlation matrix with a vector of t scores. The cat score thus describes the 
+  The CAT (``correlation-adjusted t'') score is the product of the square root of the
+  inverse correlation matrix with a vector of t scores. The CAT score thus describes the 
   contribution of each individual feature in separating the two groups, 
   after removing the effect of all other features.
 
    In Zuber and Strimmer (2009)
-  it is shown that the cat score is
+  it is shown that the CAT score is
   a natural criterion to rank features in the presence of correlation.
-  If there is no correlation, the cat score reduces to the usual t score
+  If there is no correlation, the CAT score reduces to the usual t score
   (hence in this case the estimate from \code{shrinkcat.stat} equals that from \code{\link{shrinkt.stat}}).
-  
+
+  The function \code{\link[sda]{catscore}} implements multi-class CAT scores.
 }
 \value{
   \code{shrinkcat.stat} returns a vector containing a shrinkage estimate of the
@@ -68,7 +78,6 @@ length(L)   # 102
 
 
 # shrinkage cat statistic
-\dontrun{
 score = shrinkcat.stat(X, L)
 idx = order(abs(score), decreasing=TRUE)
 idx[1:10]
@@ -79,7 +88,7 @@ library("fdrtool")
 fdr.out = fdrtool(as.vector(score))
 sum(fdr.out$qval < 0.05)
 sum(fdr.out$lfdr < 0.2)
-}
+
 
 # compared with:
 
@@ -89,16 +98,47 @@ idx = order(abs(score), decreasing=TRUE)
 idx[1:10]
 # 610 1720 3940  914  364  332 3647 4331  579 1068
 
+# shrinkage CAT score with zero correlation is the same as shrinkage t
+score2 = shrinkcat.stat(X, L, lambda=1)
+sum((score2-score)^2)
+
+
 # Student t statistic
 score = studentt.stat(X, L)
 idx = order(abs(score), decreasing=TRUE)
 idx[1:10]
 # 610 1720  364  332  914 3940 4546 1068  579 4331
 
+# shrinkage CAT score with zero correlation and no variance shrinkage 
+# is the same as student t
+score2 = shrinkcat.stat(X, L, lambda=1, lambda.var=0, verbose=FALSE)
+sum((score2-score)^2)
+
+
 # difference of means ("Fold Change")
 score = diffmean.stat(X, L)
 idx = order(abs(score), decreasing=TRUE)
 idx[1:10]
 # 735  610  694  298  698  292  739 3940  702  721
+
+
+## paired CAT score
+
+# we drop two cancer cases to make samples size equal in
+# the two groups to allow to compute paired statistic
+X = X[1:100,]
+L = L[1:100]
+sum(L=="cancer") # 50
+sum(L=="healthy") # 50
+
+# paired shrinkage CAT score
+scat.paired = shrinkcat.stat(X, L, paired=TRUE)
+
+# for zero correlation the paired shrinkage CAT score
+# reduces to the paired shrinkage t score
+score = shrinkt.stat(X, L, paired=TRUE, verbose=FALSE)
+score2 = shrinkcat.stat(X, L, lambda=1, paired=TRUE, verbose=FALSE)
+sum((score-score2)^2)
+
 }
-\keyword{univar}
+\keyword{multivar}

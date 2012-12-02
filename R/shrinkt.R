@@ -1,8 +1,8 @@
-### shrinkt.R  (2012-08-19)
+### shrinkt.R  (2012-12-01)
 ###
 ###    Shrinkage t Statistic
 ###
-### Copyright 2006-2012 Rainer Opgen-Rhein and Korbinian Strimmer
+### Copyright 2006-2012 Rainer Opgen-Rhein, Verena Zuber and Korbinian Strimmer
 ###
 ###
 ### This file is part of the `st' library for R and related languages.
@@ -22,58 +22,27 @@
 ### MA 02111-1307, USA
 
 
-shrinkt.stat = function (X, L, var.equal=TRUE, verbose=TRUE)
+shrinkt.stat = function (X, L, lambda.var, var.equal=TRUE, paired=FALSE, verbose=TRUE)
 {
-  FUN = shrinkt.fun(L=L, var.equal=var.equal, verbose=verbose)
+  if (paired)
+  {
+    X = pvt.pairX(X, L)
+    L = rep("paired", dim(X)[1])
+  }
+
+  FUN = shrinkt.fun(L=L, lambda.var=lambda.var,
+          var.equal=var.equal, verbose=verbose)
+
   score = FUN(X)
   
   return( score )
 }
 
-
-shrinkt.fun = function (L, var.equal=TRUE, verbose=TRUE)
+shrinkt.fun = function (L, lambda.var, var.equal=TRUE, verbose=TRUE)
 {
-    if (missing(L)) stop("Class labels are missing!")
-  
-    function(X)
-    {
-      p = ncol(X)
-      n = nrow(X)   
-
-      if (var.equal) # compute pooled variance
-      {
-        tmp = centroids(X, L, var.groups=FALSE, verbose=verbose)
-        n1 = tmp$samples[1]
-        n2 = tmp$samples[2]
-      
-        # differences between the two groups
-        diff = tmp$means[,1]-tmp$means[,2]
-
-        # standard error of diff
-        n1 = tmp$samples[1]
-        n2 = tmp$samples[2]
-        v =  tmp$variances[,1]  # pooled variance 
-        sd = sqrt( (1/n1 + 1/n2)*v )
-      }
-      else # allow different variances in each class
-      {
-        tmp = centroids(X, L, var.groups=TRUE, verbose=verbose)
-        n1 = tmp$samples[1]
-        n2 = tmp$samples[2]
-      
-        # differences between the two groups
-        diff = tmp$means[,1]-tmp$means[,2]
-
-        v1 = as.vector(tmp$variances[,1])
-        v2 = as.vector(tmp$variances[,2])
-   
-        # standard error of diff 
-        sd = sqrt( v1/n1 + v2/n2 )
-      }
-          
-      # t statistic
-      t = diff/sd
-
-      return(t)
-    }
+   # shrink cat with lambda=1 equals shrink t
+   return( shrinkcat.fun(L=L, lambda=1, lambda.var=lambda.var,
+             var.equal=var.equal, verbose=verbose) )
 }
+
+

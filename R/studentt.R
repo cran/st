@@ -1,8 +1,8 @@
-### studentt.R  (2012-08-19)
+### studentt.R  (2012-12-01)
 ###
 ###    Student t statistic and related stuff
 ###
-### Copyright 2006-2012 Rainer Opgen-Rhein and Korbinian Strimmer
+### Copyright 2006-2012 Rainer Opgen-Rhein, Verena Zuber and Korbinian Strimmer
 ###
 ###
 ### This file is part of the `st' library for R and related languages.
@@ -49,37 +49,24 @@ diffmean.fun = function (L)
 
 
 # student t statistic
-
-studentt.stat = function (X, L)
+studentt.stat = function (X, L, var.equal=TRUE, paired=FALSE)
 {
-  FUN = studentt.fun(L=L)
-  score = FUN(X)
+  if (paired)
+  {
+    X = pvt.pairX(X, L)
+    L = rep("paired", dim(X)[1])
+  }
   
+  FUN = studentt.fun(L=L, var.equal=var.equal)
+  score = FUN(X)
+ 
   return( score )
 }
 
-studentt.fun = function (L)
+studentt.fun = function (L, var.equal=TRUE)
 {
-    if (missing(L)) stop("Class labels are missing!")
- 
-    function(X)
-    { 
-      tmp = centroids(X, L, lambda.var=0, var.groups=FALSE, verbose=FALSE)
-      
-      # differences between the two groups
-      diff = tmp$means[,1]-tmp$means[,2]
-      
-      # standard error of diff
-      n1 = tmp$samples[1]
-      n2 = tmp$samples[2]
-      v =  tmp$variances[,1]  # pooled variance    
-      sd = sqrt( (1/n1 + 1/n2)*v )
-      
-      # t statistic
-      t = diff/sd
-      
-      return(t)
-    }
+   # shrinkage cat with lambda=1 and lambda.var=0 equals conventional t-score
+   return( shrinkcat.fun(L=L, lambda=1, lambda.var=0, var.equal=var.equal, verbose=FALSE) )
 }
 
 

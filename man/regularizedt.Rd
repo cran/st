@@ -1,6 +1,4 @@
 \name{regularizedt}
-\alias{studentt.stat}
-\alias{studentt.fun}
 \alias{efront.stat}
 \alias{efront.fun}
 \alias{sam.stat}
@@ -14,8 +12,6 @@
 \title{Various (Regularized) t Statistics}
 
 \usage{
-studentt.stat(X, L)
-studentt.fun(L)
 efront.stat(X, L, verbose=TRUE)
 efront.fun(L, verbose=TRUE)
 sam.stat(X, L)
@@ -40,8 +36,6 @@ modt.fun(L)
   \item{verbose}{print out some (more or less useful) information during computation.}
 }
 \details{
-\code{studentt.*} computes the standard equal variance t statistic.
-
 \code{efront.*} computes the t statistic using the 90 \% rule of Efron et al. (2001).
 
 \code{sam.*} computes the SAM t statistic of Tusher et al. (2001).
@@ -76,7 +70,7 @@ and relative to the shrinkage t statistic in Opgen-Rhein and Strimmer (2007).
   and
   Korbinian Strimmer (\url{http://strimmerlab.org}).
 }
-\seealso{\code{\link{diffmean.stat}}, \code{\link{shrinkt.stat}}, \code{\link{shrinkcat.stat}}.}
+\seealso{\code{\link{diffmean.stat}}, \code{\link{studentt.stat}}, \code{\link{shrinkt.stat}}, \code{\link{shrinkcat.stat}}.}
 
 \examples{
 # load st library 
@@ -91,18 +85,6 @@ L
 
 # L may also contain some real labels
 L = c("group 1", "group 1", "group 1", "group 2", "group 2", "group 2")
-
-# student t statistic
-score = studentt.stat(X, L)
-order(abs(score), decreasing=TRUE)[1:10]
-# [1] 11068   724  9990 11387 11310  9985  9996 11046    43    50
-
-# compute q-values and local false discovery rates
-library("fdrtool")
-fdr.out = fdrtool(score) 
-sum( fdr.out$qval < 0.05 )
-sum( fdr.out$lfdr < 0.2 )
-fdr.out$param
 
 
 # Efron t statistic (90 \% rule)

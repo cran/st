@@ -22,6 +22,7 @@ This package implements the "shrinkage t" statistic
 \seealso{
 \code{\link{shrinkt.stat}}, 
 \code{\link{shrinkcat.stat}}, 
+\code{\link{studentt.stat}}, 
 \code{\link{modt.stat}}, 
 \code{\link{cst.stat}}, 
 \code{\link{lait.stat}}.
