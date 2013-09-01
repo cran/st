@@ -4,8 +4,10 @@
 \title{Correlation-Adjusted t Score (CAT score)}
 
 \usage{
-shrinkcat.stat(X, L, lambda, lambda.var, var.equal=TRUE, paired=FALSE, verbose=TRUE)
-shrinkcat.fun(L, lambda, lambda.var, var.equal=TRUE, verbose=TRUE)
+shrinkcat.stat(X, L, lambda, lambda.var, lambda.freqs, var.equal=TRUE, 
+   paired=FALSE, verbose=TRUE)
+shrinkcat.fun(L, lambda, lambda.var, lambda.freqs, var.equal=TRUE, 
+   verbose=TRUE)
 }
 
 \description{
@@ -24,6 +26,8 @@ shrinkcat.fun(L, lambda, lambda.var, var.equal=TRUE, verbose=TRUE)
   \item{lambda.var}{Shrinkage intensity for the variances. If not specified it is 
     estimated from the data. \code{lambda.var=0} implies no shrinkage
     and \code{lambda.var=1} complete shrinkage. }
+  \item{lambda.freqs}{Shrinkage intensity for the frequencies. If not specified it is 
+    estimated from the data. \code{lambda.freqs=0} implies no shrinkage (i.e. empirical frequencies).}
 
   \item{var.equal}{assume equal (default) or unequal variances in each group.}
   \item{paired}{compute paired CAT score (default is to use unpaired CAT score).}
@@ -45,11 +49,14 @@ shrinkcat.fun(L, lambda, lambda.var, var.equal=TRUE, verbose=TRUE)
 }
 \value{
   \code{shrinkcat.stat} returns a vector containing a shrinkage estimate of the
- ``cat score''  for each variable/gene.
+ ``CAT score''  for each variable/gene.
 
   The corresponding \code{shrinkcat.fun} functions return a function that
   computes the cat score when applied to a data matrix
   (this is very useful for simulations).
+
+ The scale factor in the ''shrinkage CAT'' statistic is computed from the estimated frequencies
+ (to use the standard empirical scale factor set  \code{lambda.freqs=0}).
 }
 
 \references{
@@ -79,7 +86,7 @@ length(L)   # 102
 
 # shrinkage cat statistic
 score = shrinkcat.stat(X, L)
-idx = order(abs(score), decreasing=TRUE)
+idx = order(score^2, decreasing=TRUE)
 idx[1:10]
 # 610  364 1720 3647 3375  332 3282 3991 1557  914
 
@@ -94,24 +101,26 @@ sum(fdr.out$lfdr < 0.2)
 
 # shrinkage t statistic 
 score = shrinkt.stat(X, L)
-idx = order(abs(score), decreasing=TRUE)
+idx = order(score^2, decreasing=TRUE)
 idx[1:10]
 # 610 1720 3940  914  364  332 3647 4331  579 1068
 
-# shrinkage CAT score with zero correlation is the same as shrinkage t
+# shrinkage CAT score with zero correlation among predictors
+# is the same as shrinkage t
 score2 = shrinkcat.stat(X, L, lambda=1)
 sum((score2-score)^2)
 
 
 # Student t statistic
 score = studentt.stat(X, L)
-idx = order(abs(score), decreasing=TRUE)
+idx = order(score^2, decreasing=TRUE)
 idx[1:10]
 # 610 1720  364  332  914 3940 4546 1068  579 4331
 
-# shrinkage CAT score with zero correlation and no variance shrinkage 
+# shrinkage CAT score with zero correlation and no shrinkage 
 # is the same as student t
-score2 = shrinkcat.stat(X, L, lambda=1, lambda.var=0, verbose=FALSE)
+score2 = shrinkcat.stat(X, L, lambda=1, lambda.var=0, lambda.freqs=0,
+  verbose=FALSE)
 sum((score2-score)^2)
 
 

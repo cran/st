@@ -4,8 +4,9 @@
 \title{The Shrinkage t Statistic}
 
 \usage{
-shrinkt.stat(X, L, lambda.var, var.equal=TRUE, paired=FALSE, verbose=TRUE)
-shrinkt.fun(L, lambda.var, var.equal=TRUE, verbose=TRUE)
+shrinkt.stat(X, L, lambda.var, lambda.freqs, var.equal=TRUE, 
+   paired=FALSE, verbose=TRUE)
+shrinkt.fun(L, lambda.var, lambda.freqs, var.equal=TRUE, verbose=TRUE)
 }
 
 \description{
@@ -20,6 +21,8 @@ shrinkt.fun(L, lambda.var, var.equal=TRUE, verbose=TRUE)
 \item{lambda.var}{Shrinkage intensity for the variances. If not specified it is 
     estimated from the data. \code{lambda.var=0} implies no shrinkage
     and \code{lambda.var=1} complete shrinkage. }
+  \item{lambda.freqs}{Shrinkage intensity for the frequencies. If not specified it is 
+    estimated from the data. \code{lambda.freqs=0} implies no shrinkage (i.e. empirical frequencies).}
 
   \item{var.equal}{assume equal (default) or unequal variances in each group.}
 \item{paired}{compute paired t-score (default is to use unpaired t-score).}
@@ -34,6 +37,9 @@ shrinkt.fun(L, lambda.var, var.equal=TRUE, verbose=TRUE)
 
   The``shrinkage t'' statistic can be generalized to include gene-wise correlation,
   see \code{\link{shrinkcat.stat}}.
+
+ The scale factor in the ''shrinkage t'' statistic is computed from the estimated frequencies
+ (to use the standard empirical scale factor set  \code{lambda.freqs=0}).
 }
 \value{
   \code{shrinkt.stat} returns a vector containing the ``shrinkage t'' 
@@ -76,17 +82,19 @@ L = c("group 1", "group 1", "group 1", "group 2", "group 2", "group 2")
 
 # shrinkage t statistic (equal variances)
 score = shrinkt.stat(X, L)
-order(abs(score), decreasing=TRUE)[1:10]
+order(score^2, decreasing=TRUE)[1:10]
 
 # [1] 10979 11068    50  1022   724  5762    43  4790 10936  9939
-#  lambda.var (variance vector):  0.3882
+#  lambda.var (variances):  0.3882
+#  lambda.freqs (frequencies):  1
 
 # shrinkage t statistic (unequal variances)
 score = shrinkt.stat(X, L, var.equal=FALSE)
-order(abs(score), decreasing=TRUE)[1:10]
+order(score^2, decreasing=TRUE)[1:10]
 
 # [1] 11068    50 10979   724    43  1022  5762 10936  9939  9769
-#  lambda.var (variance vector):  0.3673   0.3362
+#  lambda.var class #1 and class #2 (variances):  0.3673   0.3362
+#  lambda.freqs (frequencies): 1
 
 # compute q-values and local false discovery rates
 library("fdrtool")
@@ -100,13 +108,14 @@ fdr.out$param
 
 # paired shrinkage t statistic
 score = shrinkt.stat(X, L, paired=TRUE)
-order(abs(score), decreasing=TRUE)[1:10]
+order(score^2, decreasing=TRUE)[1:10]
 # [1] 50  4790  5393 11068  5762 10238  9939   708   728    68
 
-# if there is no variance shrinkage the paired shrinkage t score reduces
+
+# if there is no shrinkage the paired shrinkage t score reduces
 # to the conventional paired student t statistic
 score = studentt.stat(X, L, paired=TRUE)
-score2 = shrinkt.stat(X, L, lambda.var=0, paired=TRUE, verbose=FALSE)
+score2 = shrinkt.stat(X, L, lambda.var=0, lambda.freqs=0, paired=TRUE, verbose=FALSE)
 sum((score-score2)^2)
 
 }

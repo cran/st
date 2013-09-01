@@ -1,8 +1,8 @@
-### shrinkcat.R  (2012-12-02)
+### shrinkcat.R  (2013-09-01)
 ###
 ###    Shrinkage Estimation of Correlation-Adjusted t Statistic
 ###
-### Copyright 2008-2012 Verena Zuber and Korbinian Strimmer
+### Copyright 2008-2013 Verena Zuber and Korbinian Strimmer
 ###
 ###
 ### This file is part of the `st' library for R and related languages.
@@ -22,7 +22,8 @@
 ### MA 02111-1307, USA
 
 
-shrinkcat.stat = function (X, L, lambda, lambda.var, var.equal=TRUE, paired=FALSE, verbose=TRUE)
+shrinkcat.stat = function (X, L, lambda, lambda.var, lambda.freqs, 
+    var.equal=TRUE, paired=FALSE, verbose=TRUE)
 {
   if (paired)
   {
@@ -30,21 +31,24 @@ shrinkcat.stat = function (X, L, lambda, lambda.var, var.equal=TRUE, paired=FALS
     L = rep("paired", dim(X)[1])
   }
 
-  FUN = shrinkcat.fun(L=L, lambda=lambda, lambda.var=lambda.var, 
-           var.equal=var.equal, verbose=verbose)
+  FUN = shrinkcat.fun(L=L, lambda=lambda, lambda.var=lambda.var,
+          lambda.freqs=lambda.freqs, var.equal=var.equal, verbose=verbose)
   score = FUN(X)
   
   return( score )
 }
 
 
-shrinkcat.fun = function (L, lambda, lambda.var, var.equal=TRUE, verbose=TRUE)
+shrinkcat.fun = function (L, lambda, lambda.var, lambda.freqs,
+   var.equal=TRUE, verbose=TRUE)
 {
     if (missing(L)) stop("Class labels are missing!")
     if (missing(lambda)) auto.lambda=TRUE
     else auto.lambda=FALSE    
     if (missing(lambda.var)) auto.lambda.var=TRUE
     else auto.lambda.var=FALSE    
+    if (missing(lambda.freqs)) auto.lambda.freqs=TRUE
+    else auto.lambda.freqs=FALSE    
 
     function(X)
     {
@@ -58,32 +62,53 @@ shrinkcat.fun = function (L, lambda, lambda.var, var.equal=TRUE, verbose=TRUE)
         compute.cor=TRUE
       }     
 
-      if (auto.lambda.var)
-        tmp = centroids(X, L, var.groups=(!var.equal), 
-               centered.data=compute.cor, verbose=verbose)
+      if(auto.lambda.var)
+      {
+        if(auto.lambda.freqs)
+          tmp = centroids(X, L, 
+               var.groups=(!var.equal),
+               centered.data=compute.cor, verbose=verbose)  
+        else
+          tmp = centroids(X, L, lambda.freqs=lambda.freqs, 
+               var.groups=(!var.equal),
+               centered.data=compute.cor, verbose=verbose)  
+              
+      }
       else
-        tmp = centroids(X, L, lambda.var=lambda.var, var.groups=(!var.equal),
-               centered.data=compute.cor, verbose=verbose)       
+      {
+        if(auto.lambda.freqs)
+          tmp = centroids(X, L, lambda.var=lambda.var,
+               var.groups=(!var.equal),
+               centered.data=compute.cor, verbose=verbose) 
+        else
+          tmp = centroids(X, L, lambda.var=lambda.var, lambda.freqs=lambda.freqs, 
+               var.groups=(!var.equal),
+               centered.data=compute.cor, verbose=verbose)        
+      }
 
       numClass = length(tmp$samples)
       if(numClass == 1) # one-sample t-score
       {
          diff = tmp$means[,1]
-         v1 = tmp$variances[,"(pooled)"]/tmp$samples[1] # variance/n
+         n = tmp$samples[1]
+         v1 = tmp$variances[,"(pooled)"]/n # variance/n
          v2 = 0
       }
       else if(numClass == 2) # two-sample tscore
       {
         diff = tmp$means[,1]-tmp$means[,2]
+        n = sum(tmp$samples)
+        n1 = tmp$freqs[1]*n
+        n2 = tmp$freqs[2]*n
         if(var.equal)
         {
-          v1 = tmp$variances[,"(pooled)"]/tmp$samples[1] # pooled variance/n1
-          v2 = tmp$variances[,"(pooled)"]/tmp$samples[2] # pooled variance/n2
+          v1 = tmp$variances[,"(pooled)"]/n1 # pooled variance/n1
+          v2 = tmp$variances[,"(pooled)"]/n2 # pooled variance/n2
         }
         else
         {
-          v1 = tmp$variances[,1]/tmp$samples[1] # # group 1 variance/n1
-          v2 = tmp$variances[,2]/tmp$samples[2] # # group 2 variance/n2
+          v1 = tmp$variances[,1]/n1 # # group 1 variance/n1
+          v2 = tmp$variances[,2]/n2 # # group 2 variance/n2
         }
       }
       else

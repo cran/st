@@ -1,8 +1,8 @@
-### shrinkt.R  (2012-12-01)
+### shrinkt.R  (2013-09-01)
 ###
 ###    Shrinkage t Statistic
 ###
-### Copyright 2006-2012 Rainer Opgen-Rhein, Verena Zuber and Korbinian Strimmer
+### Copyright 2006-2013 Rainer Opgen-Rhein, Verena Zuber and Korbinian Strimmer
 ###
 ###
 ### This file is part of the `st' library for R and related languages.
@@ -22,7 +22,7 @@
 ### MA 02111-1307, USA
 
 
-shrinkt.stat = function (X, L, lambda.var, var.equal=TRUE, paired=FALSE, verbose=TRUE)
+shrinkt.stat = function (X, L, lambda.var, lambda.freqs, var.equal=TRUE, paired=FALSE, verbose=TRUE)
 {
   if (paired)
   {
@@ -30,7 +30,7 @@ shrinkt.stat = function (X, L, lambda.var, var.equal=TRUE, paired=FALSE, verbose
     L = rep("paired", dim(X)[1])
   }
 
-  FUN = shrinkt.fun(L=L, lambda.var=lambda.var,
+  FUN = shrinkt.fun(L=L, lambda.var=lambda.var, lambda.freqs=lambda.freqs,
           var.equal=var.equal, verbose=verbose)
 
   score = FUN(X)
@@ -38,10 +38,10 @@ shrinkt.stat = function (X, L, lambda.var, var.equal=TRUE, paired=FALSE, verbose
   return( score )
 }
 
-shrinkt.fun = function (L, lambda.var, var.equal=TRUE, verbose=TRUE)
+shrinkt.fun = function (L, lambda.var, lambda.freqs, var.equal=TRUE, verbose=TRUE)
 {
    # shrink cat with lambda=1 equals shrink t
-   return( shrinkcat.fun(L=L, lambda=1, lambda.var=lambda.var,
+   return( shrinkcat.fun(L=L, lambda=1, lambda.var=lambda.var, lambda.freqs=lambda.freqs,
              var.equal=var.equal, verbose=verbose) )
 }
 

@@ -1,8 +1,8 @@
-### lait.R  (2012-08-19)
+### lait.R  (2013-09-01)
 ###
 ###    Correlation-Predicted t-Statistic of Lai
 ###
-### Copyright 2009-12 Verena Zuber and Korbinian Strimmer
+### Copyright 2009-13 Verena Zuber and Korbinian Strimmer
 ###
 ### Parts of the code are adopted from example code by Yinglai Lai
 ###
@@ -37,7 +37,7 @@ lait.fun = function (L, f=0.2, verbose=TRUE)
  
   function(X)
   { 
-    tmp = centroids(X, L, lambda.var=0, var.groups=FALSE, 
+    tmp = centroids(X, L, lambda.var=0, lambda.freqs=0, var.groups=FALSE, 
             centered.data=TRUE, verbose=verbose)
       
     # differences between the two groups

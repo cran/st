@@ -52,7 +52,7 @@ L = c("group 1", "group 1", "group 1", "group 2", "group 2", "group 2")
 
 # student t statistic (equal variances)
 score = studentt.stat(X, L)
-order(abs(score), decreasing=TRUE)[1:10]
+order(score^2, decreasing=TRUE)[1:10]
 # [1] 11068   724  9990 11387 11310  9985  9996 11046    43    50
 
 # the same computed with standard R methods (slower!)
@@ -61,7 +61,7 @@ order(abs(score), decreasing=TRUE)[1:10]
 
 # student t statistic (unequal variances)
 score = studentt.stat(X, L, var.equal=FALSE)
-order(abs(score), decreasing=TRUE)[1:10]
+order(score^2, decreasing=TRUE)[1:10]
 # [1] 11068   724  9990 11387 11310  9985  9996 11046    43    50
 
 # the same computed with standard R methods (slower!)
@@ -70,7 +70,7 @@ order(abs(score), decreasing=TRUE)[1:10]
 
 # paired student t statistic
 score = studentt.stat(X, L, paired=TRUE)
-order(abs(score), decreasing=TRUE)[1:10]
+order(score^2, decreasing=TRUE)[1:10]
 # [1] 9985  7239  5393 11387 11310  9942 10238  9996 11015 11276
 
 # the same computed with standard R methods (slower!)

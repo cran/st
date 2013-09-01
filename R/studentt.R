@@ -1,8 +1,8 @@
-### studentt.R  (2012-12-01)
+### studentt.R  (2013-09-01)
 ###
 ###    Student t statistic and related stuff
 ###
-### Copyright 2006-2012 Rainer Opgen-Rhein, Verena Zuber and Korbinian Strimmer
+### Copyright 2006-2013 Rainer Opgen-Rhein, Verena Zuber and Korbinian Strimmer
 ###
 ###
 ### This file is part of the `st' library for R and related languages.
@@ -38,7 +38,7 @@ diffmean.fun = function (L)
     
     function(X)
     { 
-      tmp = centroids(X, L, lambda.var=0, var.groups=FALSE, verbose=FALSE)
+      tmp = centroids(X, L, lambda.var=0, lambda.freqs=0, var.groups=FALSE, verbose=FALSE)
       
       # differences between the two groups
       diff = tmp$means[,1]-tmp$means[,2]
@@ -66,7 +66,7 @@ studentt.stat = function (X, L, var.equal=TRUE, paired=FALSE)
 studentt.fun = function (L, var.equal=TRUE)
 {
    # shrinkage cat with lambda=1 and lambda.var=0 equals conventional t-score
-   return( shrinkcat.fun(L=L, lambda=1, lambda.var=0, var.equal=var.equal, verbose=FALSE) )
+   return( shrinkcat.fun(L=L, lambda=1, lambda.var=0, lambda.freqs=0, var.equal=var.equal, verbose=FALSE) )
 }
 
 
