@@ -23,5 +23,8 @@ export(
 "studentt.fun",
 "studentt.stat"
 )
-
+import(
+"fdrtool",
+"sda"
+)
 
