@@ -1,8 +1,8 @@
-### sam.R  (2008-10-27)
+### sam.R  (2014-11-14)
 ###
 ###    SAM t Statistic
 ###
-### Copyright 2006-2008 Rainer Opgen-Rhein and Korbinian Strimmer
+### Copyright 2006-2014 Rainer Opgen-Rhein and Korbinian Strimmer
 ###
 ###
 ### This file is part of the `st' library for R and related languages.
@@ -44,7 +44,7 @@ sam.fun <- function(L)
    function(X)
     {
       dd = list(x=t(X),y=as.integer(L), logged2=TRUE)
-      out = samr(dd, resp.type="Two class unpaired", nperms=1)
+      out = samr::samr(dd, resp.type="Two class unpaired", nperms=1)
   
       return(out$tt) # SAM test statistic
     } 

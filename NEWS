@@ -3,6 +3,12 @@
                =======================================
 
 
+		CHANGES IN `st' PACKAGE VERSION 1.2.3
+
+- change of maintainer email address.
+- fixed the  "no visible global function definition" warnings.
+
+
 		CHANGES IN `st' PACKAGE VERSION 1.2.2
 
 - added import statement in NAMESPACE to address corresponding warnings

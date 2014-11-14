@@ -1,8 +1,8 @@
-### modt.R  (2007-10-27)
+### modt.R  (2014-11-14)
 ###
 ###    Moderated t Statistic
 ###
-### Copyright 2006-2008 Rainer Opgen-Rhein and Korbinian Strimmer
+### Copyright 2006-2014 Rainer Opgen-Rhein and Korbinian Strimmer
 ###
 ###
 ### This file is part of the `st' library for R and related languages.
@@ -46,8 +46,8 @@ modt.fun <- function (L)
     {
       L = as.integer(L)
       d <- cbind(rep(1, length(L)), L)
-      fit <- lmFit(t(X), design=d)
-      eb.out <- ebayes(fit)
+      fit <- limma::lmFit(t(X), design=d)
+      eb.out <- limma::ebayes(fit)
       modt <- -eb.out$t[,2]
   
       return(modt) 
