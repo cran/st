@@ -1,8 +1,8 @@
-### sam.R  (2014-11-14)
+### sam.R  (2015-03-21)
 ###
 ###    SAM t Statistic
 ###
-### Copyright 2006-2014 Rainer Opgen-Rhein and Korbinian Strimmer
+### Copyright 2006-2015 Rainer Opgen-Rhein and Korbinian Strimmer
 ###
 ###
 ### This file is part of the `st' library for R and related languages.
@@ -34,8 +34,6 @@ sam.stat = function (X, L)
 
 sam.fun <- function(L)
 {
-   require("samr")
-
     if (missing(L)) stop("Class labels are missing!")
     L = factor(L)
     cl = levels(L)

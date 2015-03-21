@@ -35,11 +35,6 @@ and  \code{choe2.degenes} indicates the known differentially expressed genes.
 \code{choe2.mapping} provide additional information on the investigated genes.
 }
 
-\source{
-\url{http://genomebiology.com/2005/6/2/r16/abstract/}, 
-\url{http://www.ccr.buffalo.edu/halfon/spike/}
-}
-
 
 \references{
 Choe, S. E., M. Boutros, A. M. Michelson, G. M. Church, and M. ~S. Halfon.

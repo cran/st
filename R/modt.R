@@ -1,8 +1,8 @@
-### modt.R  (2014-11-14)
+### modt.R  (2015-03-21)
 ###
 ###    Moderated t Statistic
 ###
-### Copyright 2006-2014 Rainer Opgen-Rhein and Korbinian Strimmer
+### Copyright 2006-2015 Rainer Opgen-Rhein and Korbinian Strimmer
 ###
 ###
 ### This file is part of the `st' library for R and related languages.
@@ -34,9 +34,7 @@ modt.stat = function (X, L)
 }
 
 modt.fun <- function (L)
-{
-    require("limma")
-    
+{    
     if (missing(L)) stop("Class labels are missing!")
     L = factor(L)
     cl = levels(L)

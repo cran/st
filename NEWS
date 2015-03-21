@@ -2,6 +2,10 @@
                  RELEASE HISTORY OF THE "st" PACKAGE
                =======================================
 
+		CHANGES IN `st' PACKAGE VERSION 1.2.4
+
+- fixed the "please use :: or requireNamespace() instead" warnings.
+
 
 		CHANGES IN `st' PACKAGE VERSION 1.2.3
 

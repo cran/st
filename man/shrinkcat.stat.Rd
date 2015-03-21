@@ -62,7 +62,7 @@ shrinkcat.fun(L, lambda, lambda.var, lambda.freqs, var.equal=TRUE,
 \references{
 Zuber, V., and K. Strimmer. 2009.  Gene ranking and biomarker discovery under correlation.
 Bioinformatics 25: 2700-2707.
-Preprint available from \url{http://arxiv.org/abs/0902.0751}.
+\url{http://dx.doi.org/10.1093/bioinformatics/btp460}.
 }
 \author{
   Verena Zuber 

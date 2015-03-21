@@ -55,7 +55,7 @@ shrinkt.fun(L, lambda.var, lambda.freqs, var.equal=TRUE, verbose=TRUE)
  differentially expressed genes by a distribution-free shrinkage 
  approach.  
  Statist. Appl. Genet. Mol. Biol. \bold{6}:9.
- (\url{http://www.bepress.com/sagmb/vol6/iss1/art9/})  
+ (\url{http://dx.doi.org/10.2202/1544-6115.1252})  
 }
 \author{
   Rainer Opgen-Rhein, Verena Zuber, 
