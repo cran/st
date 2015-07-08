@@ -23,9 +23,6 @@ export(
 "studentt.fun",
 "studentt.stat"
 )
-import(
-"fdrtool",
-"sda",
-"corpcor"
-)
-
+import("fdrtool","sda","corpcor")
+import("graphics")
+import("stats")
