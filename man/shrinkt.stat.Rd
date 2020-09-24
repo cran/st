@@ -55,12 +55,12 @@ shrinkt.fun(L, lambda.var, lambda.freqs, var.equal=TRUE, verbose=TRUE)
  differentially expressed genes by a distribution-free shrinkage 
  approach.  
  Statist. Appl. Genet. Mol. Biol. \bold{6}:9.
- (\url{http://dx.doi.org/10.2202/1544-6115.1252})  
+ (\url{https://doi.org/10.2202/1544-6115.1252})  
 }
 \author{
   Rainer Opgen-Rhein, Verena Zuber, 
   and
-  Korbinian Strimmer (\url{http://strimmerlab.org}).
+  Korbinian Strimmer (\url{http://www.strimmerlab.org}).
 }
 \seealso{\code{\link{studentt.stat}},
          \code{\link{diffmean.stat}},

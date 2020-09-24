@@ -34,11 +34,11 @@ cst.fun(L, verbose=TRUE)
 
 \references{
 Tibshirani, R., and L. Wasserman. 2006.  Correlation-sharing for detection of differential gene expression.
-See \url{http://arxiv.org/abs/math/0608061} for publication details.
+See \url{https://arxiv.org/abs/math/0608061} for publication details.
 }
 \author{
 
-  Korbinian Strimmer (\url{http://strimmerlab.org}).
+  Korbinian Strimmer (\url{http://www.strimmerlab.org}).
 }
 \seealso{\code{\link{shrinkcat.stat}}, \code{\link{lait.stat}}.}
 

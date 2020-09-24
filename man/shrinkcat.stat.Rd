@@ -62,12 +62,12 @@ shrinkcat.fun(L, lambda, lambda.var, lambda.freqs, var.equal=TRUE,
 \references{
 Zuber, V., and K. Strimmer. 2009.  Gene ranking and biomarker discovery under correlation.
 Bioinformatics 25: 2700-2707.
-\url{http://dx.doi.org/10.1093/bioinformatics/btp460}.
+\url{https://doi.org/10.1093/bioinformatics/btp460}.
 }
 \author{
   Verena Zuber 
   and
-  Korbinian Strimmer (\url{http://strimmerlab.org}).
+  Korbinian Strimmer (\url{http://www.strimmerlab.org}).
 }
 \seealso{\code{\link[sda]{catscore}}, \code{\link{shrinkt.stat}}, \code{\link{cst.stat}}, \code{\link{lait.stat}}.}
 

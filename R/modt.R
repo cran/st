@@ -22,7 +22,7 @@
 ### MA 02111-1307, USA
 
 
-# Note: these function2 require the "limma" library
+# Note: these functions require the "limma" library
 
 
 modt.stat = function (X, L)
@@ -45,7 +45,7 @@ modt.fun <- function (L)
       L = as.integer(L)
       d <- cbind(rep(1, length(L)), L)
       fit <- limma::lmFit(t(X), design=d)
-      eb.out <- limma::ebayes(fit)
+      eb.out <- limma::eBayes(fit)
       modt <- -eb.out$t[,2]
   
       return(modt) 

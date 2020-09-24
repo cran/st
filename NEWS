@@ -3,6 +3,11 @@
                =======================================
 
 
+		CHANGES IN `st' PACKAGE VERSION 1.2.6
+
+- change modt.fun() to use limma::eBayes() rather than limma::ebayes().
+
+
 		CHANGES IN `st' PACKAGE VERSION 1.2.5
 
 - added import statements required by R-devel.

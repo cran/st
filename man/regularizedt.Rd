@@ -63,12 +63,12 @@ and relative to the shrinkage t statistic in Opgen-Rhein and Strimmer (2007).
  differentially expressed genes by a distribution-free shrinkage 
  approach.  
  Statist. Appl. Genet. Mol. Biol. \bold{6}:9.
- (\url{http://dx.doi.org/10.2202/1544-6115.1252})  
+ (\url{https://doi.org/10.2202/1544-6115.1252})  
 }
 \author{
   Rainer Opgen-Rhein 
   and
-  Korbinian Strimmer (\url{http://strimmerlab.org}).
+  Korbinian Strimmer (\url{http://www.strimmerlab.org}).
 }
 \seealso{\code{\link{diffmean.stat}}, \code{\link{studentt.stat}}, \code{\link{shrinkt.stat}}, \code{\link{shrinkcat.stat}}.}
 
