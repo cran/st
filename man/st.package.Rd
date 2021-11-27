@@ -14,9 +14,9 @@ This package implements the "shrinkage t" statistic
 }
 
 \author{Rainer Opgen-Rhein, Verena Zuber, and 
-        Korbinian Strimmer (\url{http://www.strimmerlab.org/})}
+        Korbinian Strimmer (\url{https://strimmerlab.github.io/})}
 \references{
-  See website: \url{http://www.strimmerlab.org/software/st/}
+  See website: \url{https://strimmerlab.github.io/software/st/}
 }
 \keyword{univar}
 \seealso{

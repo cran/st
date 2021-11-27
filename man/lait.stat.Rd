@@ -49,7 +49,7 @@ Bioinformatics \bold{24}:666-673.
 }
 \author{
 
-  Verena Zuber and Korbinian Strimmer (\url{http://www.strimmerlab.org}).
+  Verena Zuber and Korbinian Strimmer (\url{https://strimmerlab.github.io}).
 }
 \seealso{\code{\link{shrinkcat.stat}}, \code{\link{cst.stat}}.}
 

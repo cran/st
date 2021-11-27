@@ -44,7 +44,7 @@ to detect differentially regulated genes in replicated microarray experiments.
  FEBS Letters \bold{573}:83-9.
 }
 \author{
-  Korbinian Strimmer (\url{http://www.strimmerlab.org}).
+  Korbinian Strimmer (\url{https://strimmerlab.github.io}).
 
   This function is in part based on code from Henry Wirth.
 }

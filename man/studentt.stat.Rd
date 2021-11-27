@@ -32,7 +32,7 @@ d}
 
 \author{
   Verena Zuber and
-  Korbinian Strimmer (\url{http://www.strimmerlab.org}).
+  Korbinian Strimmer (\url{https://strimmerlab.github.io}).
 }
 \seealso{\code{\link{shrinkt.stat}}, \code{\link{shrinkcat.stat}}.}
 

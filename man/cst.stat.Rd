@@ -38,7 +38,7 @@ See \url{https://arxiv.org/abs/math/0608061} for publication details.
 }
 \author{
 
-  Korbinian Strimmer (\url{http://www.strimmerlab.org}).
+  Korbinian Strimmer (\url{https://strimmerlab.github.io}).
 }
 \seealso{\code{\link{shrinkcat.stat}}, \code{\link{lait.stat}}.}
 
